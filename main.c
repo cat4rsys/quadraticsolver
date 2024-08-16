@@ -2,8 +2,11 @@
 #include <stdlib.h>
 #include <math.h>
 
-double discriminant(double a, double b, double c); // прототип функции, которая считает дискриминант
-                                                    // квадратного уравнения ax^2 + bx + c = 0
+const double eps = 1e-37;
+
+double discriminant(double a, double b, double c);       // прототип функции, которая считает дискриминант
+                                                         // квадратного уравнения ax^2 + bx + c = 0
+
 double finalexp(int ine, int znake, int ee, double num); // функция, которая записывает число num в экспоненциальную форму
 
 void mainmenu(char * u); // меню с характеристиками каждого режима работы и его выбором
@@ -18,7 +21,7 @@ int main()
     double d; // переменная для зранения значения дискриминанта
     int ac; // переменная для хранения точности
     char v; // переменная для ввода решений пользователя
-    double koef[3]; // массив для хранения коэффициента одночлена iой степени
+    double koef[3] = {}; // массив для хранения коэффициента одночлена iой степени
     int err = 0; // переменная для отслеживания кода ошибки ввода
 
     beg: mainmenu(&v); // вывод главного меню и выбор режима работы
@@ -162,8 +165,9 @@ void mainmenu(char * u)
     *u = getchar();
     while (getchar() != '\n' || (*u != 'a' && *u != 'b' && *u != 'а' && *u != 'q')){
         printf("Неправильный ввод, попробуйте снова\n");
-        while (getchar() != '\n')
+        while (getchar() != '\n'){
             continue;
+        }
         *u = getchar();
     }
 }
@@ -415,7 +419,7 @@ void input(double koef[], int * err)
     }
     // запись последнего числа
     num = finalexp(ine, znake, ee, num);
-    if (!ifnum && fabs(num)<1e-37)
+    if (!ifnum && fabs(num)<eps)
         num = 1.0;
     if (m == 0)
         koef[pow] += znak * num;
