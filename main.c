@@ -305,6 +305,8 @@ void input(double koef[], int * err)
         else if (v == ' '); // игнорирование пробела
         else{ // ошибка в случае ввода постороннего символа
             *err = -2;
+            while (getchar() != '\n')
+                continue;
             return;
         }
     }
@@ -406,6 +408,8 @@ void input(double koef[], int * err)
         else if (v == ' ');
         else{
             *err = -2;
+            while (getchar() != '\n')
+                continue;
             return;
         }
     }
