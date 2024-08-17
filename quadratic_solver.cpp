@@ -35,6 +35,8 @@ int readDot(int * inFractional, int * signE, int inE);
 
 int readE(int * ifE, int * tempNumInE, int * numInE, int * signE, int * inFractional);
 
+void readX(int * ifMult, int * power);
+
 int main()
 {
     char choice = 0;
@@ -75,7 +77,7 @@ void simpleMode(void)
     while (errorCode != -1){
         koef[0] = koef[1] = koef[2] = 0.0;
         input(koef, &errorCode);
-        printf("%lf, %lf, %lf\n", koef[2], koef[1], koef[0]);
+        //printf("%lf, %lf, %lf\n", koef[2], koef[1], koef[0]);
         output(koef[2], koef[1], koef[0], errorCode, normalAccuracy);
     }
 }
@@ -149,13 +151,11 @@ void input(double coefficient[], int * errorCode)
             *errorCode = readQ();
         else if (isDigit(v))
             *errorCode = readNum(v, ifE, &numInE, signE, inFractional, &num, &ifNum);
-        else if ((v == '.') || (v == ',')){
+        else if ((v == '.') || (v == ','))
             *errorCode = readDot(&inFractional, &signE, ifE);
-        }
-        else if (v == 'e' || v == 'E'){
+        else if (v == 'e' || v == 'E')
             *errorCode = readE(&ifE, &tempNumInE, &numInE, &signE, &inFractional);
-        }
-        else if (v == '*'){ // считывание умножения
+        else if (v == '*'){
             tempNumInE += numInE;
             numInE = 0;
             ifE = 0;
@@ -166,7 +166,7 @@ void input(double coefficient[], int * errorCode)
             ifMult = 1;
             num = 0;
         }
-        else if (v == '/'){ // считывание деления
+        else if (v == '/'){
             ifE = 0;
             inFractional = 0;
             multiplicatedNum /= (num*1.0);
@@ -175,14 +175,8 @@ void input(double coefficient[], int * errorCode)
             ifMult = -1;
             num = 0;
         }
-        // считывание неизвестных
         else if (v == 'x'){
-            if (ifMult == 1 || ifMult == 0){
-                power += 1;
-                ifMult = 1;
-            }
-            else
-                power-=1;
+            readX(&ifMult, &power);
         }
         else if (v == '+'){
             if (prevSymbol == 'e' || prevSymbol == 'E'){
@@ -227,11 +221,7 @@ void input(double coefficient[], int * errorCode)
             *errorCode = readE(&ifE, &tempNumInE, &numInE, &signE, &inFractional);
         }
         else if (v == 'x'){
-            if (innum)
-                power = 2;
-            else
-                power = 1;
-            innum = 1;
+            readX(&ifMult, &power);
         }
         else if (v == '=')
         {
@@ -309,6 +299,15 @@ int readDot(int * inFractional, int * signE, int inE)
     return 0;
 }
 
+void readX(int * ifMult, int * power)
+{
+    if (*ifMult == 1 || *ifMult == 0){
+        *power += 1;
+        *ifMult = 1;
+    }
+    else
+        *power-=1;
+}
 int readE(int * ifE, int * tempNumInE, int * numInE, int * signE, int * inFractional)
 {
     if (*ifE){
