@@ -1,41 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
-const double eps = 1e-37;
-const int normalAccuracy = 3;
-
-void mainmenu(char * choice);
-
-void input(double coefficient[], int * errorCode);
-
-void error(int errorCode);
-
-void output(double a, double b, double c, int err, int accuracy);
-
-int getAccuracy(void);
-
-void skipInput(void);
-
-void goodBye(void);
-
-int isDigit(char symbol);
-
-void simpleMode(void);
-
-void detailMode(void);
-
-int record(int ifNum, int sign, double num, int ifMult, double multiplicatedNum, int signE, int numInE, int power, double coefficient[]);
-
-int readQ(void);
-
-int readNum(char symbol, int ifE, int * numInE, int signE, int inFractional, double * num, int * ifNum);
-
-int readDot(int * inFractional, int * signE, int inE);
-
-int readE(int * ifE, int * tempNumInE, int * numInE, int * signE, int * inFractional);
-
-void readX(int * ifMult, int * power);
+#include "read.h"
+#include "iosolver.h"
 
 int main()
 {
@@ -44,14 +11,15 @@ int main()
     mainmenu(&choice);
     while (choice != 'q'){
         (choice == 'a') ? simpleMode() : detailMode();
+        system("cls");
         mainmenu(&choice);
     }
     goodBye();
 }
 
-void mainmenu(char * u)
+/*void mainmenu(char * u)
 {
-    printf("\nQuadratic equation solver\n");
+    printf("Quadratic equation solver\n");
     printf("Program has two modes of work:\n");
     printf("Simple mode - mode with minimum output and opportunity to enter equations endlessly.\n");
     printf("Detail mode - mode, that instructing you, but you can enter only one equation\n");
@@ -100,7 +68,7 @@ void detailMode(void)
     output(koef[2], koef[1], koef[0], errorCode, accuracy);
 }
 
-int record(int ifNum, int sign, double num, int ifMult, double multiplicatedNum, int tempNumInE, int numInE, int power, double coefficient[])
+int record(int sign, double num, int ifMult, double multiplicatedNum, int tempNumInE, int numInE, int power, double coefficient[])
 {
     numInE += tempNumInE;
     if (numInE != 0){
@@ -109,8 +77,6 @@ int record(int ifNum, int sign, double num, int ifMult, double multiplicatedNum,
         else
             for(;numInE < 0; numInE++, num /= 10.0);
     }
-    if (!ifNum && fabs(num) < eps)
-        num = 1.0;
     if (power > 2){
         skipInput();
         return -4;
@@ -150,7 +116,7 @@ void input(double coefficient[], int * errorCode)
         if (v == 'q')
             *errorCode = readQ();
         else if (isDigit(v))
-            *errorCode = readNum(v, ifE, &numInE, signE, inFractional, &num, &ifNum);
+            *errorCode = readNum(v, prevSymbol, ifE, &numInE, signE, inFractional, &num, &ifNum);
         else if ((v == '.') || (v == ','))
             *errorCode = readDot(&inFractional, &signE, ifE);
         else if (v == 'e' || v == 'E')
@@ -176,7 +142,7 @@ void input(double coefficient[], int * errorCode)
             num = 0;
         }
         else if (v == 'x'){
-            readX(&ifMult, &power);
+            *errorCode = readX(&ifMult, &power, &ifNum, &num);
         }
         else if (v == '+'){
             if (prevSymbol == 'e' || prevSymbol == 'E'){
@@ -212,7 +178,7 @@ void input(double coefficient[], int * errorCode)
     sign = -1;
     while (((v = getchar()) != '\n')){ // считывание правой части уравнения
         if (isDigit(v)){
-            *errorCode = readNum(v, ifE, &numInE, signE, inFractional, &num, &ifNum);
+            *errorCode = readNum(v, prevSymbol, ifE, &numInE, signE, inFractional, &num, &ifNum);
         }
         else if ((v == '.') || (v == ',')){
             *errorCode = readDot(&inFractional, &signE, ifE);
@@ -221,7 +187,7 @@ void input(double coefficient[], int * errorCode)
             *errorCode = readE(&ifE, &tempNumInE, &numInE, &signE, &inFractional);
         }
         else if (v == 'x'){
-            readX(&ifMult, &power);
+            *errorCode = readX(&ifMult, &power, &ifNum, &num);
         }
         else if (v == '=')
         {
@@ -271,8 +237,12 @@ int readQ(void)
     }
 }
 
-int readNum(char symbol, int ifE, int * numInE, int signE, int inFractional, double * num, int * ifNum)
+int readNum(char symbol, char prevSymbol, int ifE, int * numInE, int signE, int inFractional, double * num, int * ifNum)
 {
+    if (prevSymbol == 'x' || prevSymbol == 'X'){
+        skipInput();
+        return -8;
+    }
     if (ifE)
         *numInE = *numInE * 10 + signE * (symbol - '0');
     else{
@@ -299,8 +269,9 @@ int readDot(int * inFractional, int * signE, int inE)
     return 0;
 }
 
-void readX(int * ifMult, int * power)
+int readX(int * ifMult, int * power)
 {
+
     if (*ifMult == 1 || *ifMult == 0){
         *power += 1;
         *ifMult = 1;
@@ -308,6 +279,7 @@ void readX(int * ifMult, int * power)
     else
         *power-=1;
 }
+
 int readE(int * ifE, int * tempNumInE, int * numInE, int * signE, int * inFractional)
 {
     if (*ifE){
@@ -336,6 +308,8 @@ void error(int errorCode)
         printf("ERROR: Exponential part can be only integer\n");
     if (errorCode == -7)
         printf("ERROR: In one number can be only one exponential part\n");
+    if (errorCode == -8)
+        printf("ERROR: After \"x\" expected *, /, +, -");
 }
 
 void output(double a, double b, double c, int err, int accuracy)
@@ -400,11 +374,4 @@ void goodBye()
 {
     printf("Thank you for using my program. Good bye!");
 }
-
-int isDigit(char symbol)
-{
-    if (symbol >= '0' && symbol <= '9')
-        return 1;
-    else
-        return 0;
-}
+*/
