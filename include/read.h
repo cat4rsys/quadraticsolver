@@ -10,7 +10,7 @@ readE   - func, that reads "e" or "E" as beginning of exponential part. returns 
           are two or more exponential parts in one number
 readX   - func, that reads
 ------------------------------------------------------------------------------------------------------*/
-int readQ(void);
+int readExit(void);
 
 int readNum(char symbol, char prevSymbol, int ifE, int * numInE, int signE, int inFractional, double * num, int * ifNum);
 
@@ -18,4 +18,6 @@ int readDot(int * inFractional, int * signE, int inE);
 
 int readE(int * ifE, int * tempNumInE, int * numInE, int * signE, int * inFractional);
 
-int readX(int * ifMult, int * power, int ifNum, double * num);
+int readVar(int * ifMult, int * power, int ifNum, double * num);
+
+//int readMultiplication(int *)

@@ -1,23 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "read.h"
-#include "iosolver.h"
+#include <ctype.h>
+#include "include/read.h"
+#include "include/iosolver.h"
 
-int main()
-{
-    char choice = 0;
-
-    mainmenu(&choice);
-    while (choice != 'q'){
-        (choice == 'a') ? simpleMode() : detailMode();
-        system("cls");
-        mainmenu(&choice);
-    }
-    goodBye();
-}
-
-/*void mainmenu(char * u)
+void mainMenu(char * u)
 {
     printf("Quadratic equation solver\n");
     printf("Program has two modes of work:\n");
@@ -30,19 +18,19 @@ int main()
     printf("Or enter \"q\" for quit\n");
 
     *u = getchar();
-    while (getchar() != '\n' || (*u != 'b' && *u != 'a' && *u != 'q')){
+    if (*u != 'b' && *u != 'a' && *u != 'q') {
         printf("Wrong input. Try again:\n");
         skipInput();
         *u = getchar();
     }
 }
 
-void simpleMode(void)
+void simpleMode()
 {
     printf("Enter your equations. To exit to the menu enter \"q\".\n");
     int errorCode = 0;
     double koef[3];
-    while (errorCode != -1){
+    while (errorCode != RETURN_IN_MAIN_MENU) {
         koef[0] = koef[1] = koef[2] = 0.0;
         input(koef, &errorCode);
         //printf("%lf, %lf, %lf\n", koef[2], koef[1], koef[0]);
@@ -50,7 +38,7 @@ void simpleMode(void)
     }
 }
 
-void detailMode(void)
+void detailMode()
 {
     int errorCode = 0;
     double koef[3] = {};
@@ -61,35 +49,10 @@ void detailMode(void)
     printf("For writing square of x you can use \"xx\"\n");
     input(koef, &errorCode);
             printf("test\n");
-    if (errorCode == -1){
+    if (errorCode == RETURN_IN_MAIN_MENU)
         return;
-    }
     int accuracy = getAccuracy();
     output(koef[2], koef[1], koef[0], errorCode, accuracy);
-}
-
-int record(int sign, double num, int ifMult, double multiplicatedNum, int tempNumInE, int numInE, int power, double coefficient[])
-{
-    numInE += tempNumInE;
-    if (numInE != 0){
-        if (numInE > 0)
-            for(;numInE > 0; numInE--, num *= 10.0);
-        else
-            for(;numInE < 0; numInE++, num /= 10.0);
-    }
-    if (power > 2){
-        skipInput();
-        return -4;
-    }
-    if (fabs(multiplicatedNum) < eps)
-        multiplicatedNum = 1;
-    if (ifMult == 0)
-        coefficient[power] += sign * num;
-    else if (ifMult == 1)
-        coefficient[power] += sign * num * multiplicatedNum;
-    else if (ifMult == -1)
-        coefficient[power] += sign * multiplicatedNum / num;
-    return 0;
 }
 
 void input(double coefficient[], int * errorCode)
@@ -112,10 +75,10 @@ void input(double coefficient[], int * errorCode)
     power = innum = ifNum = num = numInE = ifE = inFractional = prevSymbol = ifMult = multiplicatedNum = tempNumInE = 0;
     sign = +1;
 
-    while ((v = getchar()) != '='){ // считывание левой части уравнения
+    while ((v = getchar()) != '=') { // считывание левой части уравнения
         if (v == 'q')
-            *errorCode = readQ();
-        else if (isDigit(v))
+            *errorCode = readExit();
+        else if (isdigit(v))
             *errorCode = readNum(v, prevSymbol, ifE, &numInE, signE, inFractional, &num, &ifNum);
         else if ((v == '.') || (v == ','))
             *errorCode = readDot(&inFractional, &signE, ifE);
@@ -127,6 +90,7 @@ void input(double coefficient[], int * errorCode)
             ifE = 0;
             inFractional = 0;
             multiplicatedNum *= num;
+            ifNum = 0;
             if (ifMult == 0)
                 multiplicatedNum = num;
             ifMult = 1;
@@ -142,14 +106,14 @@ void input(double coefficient[], int * errorCode)
             num = 0;
         }
         else if (v == 'x'){
-            *errorCode = readX(&ifMult, &power, &ifNum, &num);
+            *errorCode = readVar(&ifMult, &power, ifNum, &num);
         }
         else if (v == '+'){
             if (prevSymbol == 'e' || prevSymbol == 'E'){
                 signE = +1;
             }
             else{
-                record(ifNum, sign, num, ifMult, multiplicatedNum, tempNumInE, numInE, power, coefficient);
+                record(sign, num, ifMult, multiplicatedNum, tempNumInE, numInE, power, coefficient);
                 power = innum = ifNum = num = numInE = ifE = inFractional = prevSymbol = ifMult = multiplicatedNum = tempNumInE = 0;
                 sign = +1;
             }
@@ -159,25 +123,25 @@ void input(double coefficient[], int * errorCode)
                 signE = -1;
             }
             else{
-                record(ifNum, sign, num, ifMult, multiplicatedNum, tempNumInE, numInE, power, coefficient);
+                record(sign, num, ifMult, multiplicatedNum, tempNumInE, numInE, power, coefficient);
                 power = innum = ifNum = num = numInE = ifE = inFractional = prevSymbol = ifMult = multiplicatedNum = tempNumInE = 0;
                 sign = -1;
             }
         }
         else if (v == ' ');
         else{ // ошибка в случае ввода постороннего символа
-            *errorCode = -2;
+            *errorCode = UNKNOWN_SYMBOL;
             skipInput();
         }
         if (*errorCode != 0)
             return;
         prevSymbol = v;
     }
-    record(ifNum, sign, num, ifMult, multiplicatedNum, tempNumInE, numInE, power, coefficient);
+    record(sign, num, ifMult, multiplicatedNum, tempNumInE, numInE, power, coefficient);
     power = innum = ifNum = num = numInE = ifE = inFractional = prevSymbol = ifMult = multiplicatedNum = tempNumInE = 0;
     sign = -1;
     while (((v = getchar()) != '\n')){ // считывание правой части уравнения
-        if (isDigit(v)){
+        if (isdigit(v)){
             *errorCode = readNum(v, prevSymbol, ifE, &numInE, signE, inFractional, &num, &ifNum);
         }
         else if ((v == '.') || (v == ',')){
@@ -187,11 +151,11 @@ void input(double coefficient[], int * errorCode)
             *errorCode = readE(&ifE, &tempNumInE, &numInE, &signE, &inFractional);
         }
         else if (v == 'x'){
-            *errorCode = readX(&ifMult, &power, &ifNum, &num);
+            *errorCode = readVar(&ifMult, &power, ifNum, &num);
         }
         else if (v == '=')
         {
-            *errorCode = -3;
+            *errorCode = TWO_OR_MORE_EQUALS;
             skipInput();
         }
         else if (v == '+'){
@@ -199,7 +163,7 @@ void input(double coefficient[], int * errorCode)
                 signE = +1;
             }
             else{
-                record(ifNum, sign, num, ifMult, multiplicatedNum, tempNumInE, numInE, power, coefficient);
+                record(sign, num, ifMult, multiplicatedNum, tempNumInE, numInE, power, coefficient);
                 power = innum = ifNum = num = numInE = ifE = inFractional = prevSymbol = ifMult = multiplicatedNum = tempNumInE = 0;
                 sign = -1;
             }
@@ -209,106 +173,62 @@ void input(double coefficient[], int * errorCode)
                 signE = -1;
             }
             else{
-                record(ifNum, sign, num, ifMult, multiplicatedNum, tempNumInE, numInE, power, coefficient);
+                record(sign, num, ifMult, multiplicatedNum, tempNumInE, numInE, power, coefficient);
                 power = innum = ifNum = num = numInE = ifE = inFractional = prevSymbol = ifMult = multiplicatedNum = tempNumInE = 0;
                 sign = +1;
             }
         }
         else if (v == ' ');
         else{
-            *errorCode = -2;
+            *errorCode = UNKNOWN_SYMBOL;
             skipInput();
             return;
         }
         if (*errorCode != 0)
             return;
     }
-    record(ifNum, sign, num, ifMult, multiplicatedNum, tempNumInE, numInE, power, coefficient);
+    record(sign, num, ifMult, multiplicatedNum, tempNumInE, numInE, power, coefficient);
 }
 
-int readQ(void)
+int record(int sign, double num, int ifMult, double multiplicatedNum, int tempNumInE, int numInE, int power, double coefficient[])
 {
-    if (getchar() == '\n'){
-        return -1;
+    numInE += tempNumInE;
+    if (numInE != 0){
+        if (numInE > 0)
+            for(;numInE > 0; numInE--, num *= 10.0);
+        else
+            for(;numInE < 0; numInE++, num /= 10.0);
     }
-    else{
+    if (power > 2){
         skipInput();
-        return -2;
+        return POWER_MORE_THAN_TWO;
     }
-}
-
-int readNum(char symbol, char prevSymbol, int ifE, int * numInE, int signE, int inFractional, double * num, int * ifNum)
-{
-    if (prevSymbol == 'x' || prevSymbol == 'X'){
-        skipInput();
-        return -8;
-    }
-    if (ifE)
-        *numInE = *numInE * 10 + signE * (symbol - '0');
-    else{
-        if (inFractional)
-            *numInE -= 1;
-        *num = *num * 10 + symbol - '0';
-        *ifNum = 1;
-    }
-    return 0;
-}
-
-int readDot(int * inFractional, int * signE, int inE)
-{
-    if (*inFractional){
-        skipInput();
-        return -5;
-    }
-    if (inE){
-        skipInput();
-        return -6;
-    }
-    *inFractional = 1;
-    *signE = -1;
-    return 0;
-}
-
-int readX(int * ifMult, int * power)
-{
-
-    if (*ifMult == 1 || *ifMult == 0){
-        *power += 1;
-        *ifMult = 1;
-    }
-    else
-        *power-=1;
-}
-
-int readE(int * ifE, int * tempNumInE, int * numInE, int * signE, int * inFractional)
-{
-    if (*ifE){
-        skipInput();
-        return -7;
-    }
-    *ifE = 1;
-    *inFractional = 0;
-    *tempNumInE += *numInE;
-    *numInE = 0;
-    *signE = +1;
+    if (fabs(multiplicatedNum) < eps)
+        multiplicatedNum = 1;
+    if (ifMult == 0)
+        coefficient[power] += sign * num;
+    else if (ifMult == 1)
+        coefficient[power] += sign * num * multiplicatedNum;
+    else if (ifMult == -1)
+        coefficient[power] += sign * multiplicatedNum / num;
     return 0;
 }
 
 void error(int errorCode)
 {
-    if (errorCode == -2)
+    if (errorCode == UNKNOWN_SYMBOL)
         printf("ERROR: Unknown symbol in input\n");
-    if (errorCode == -3)
+    if (errorCode == TWO_OR_MORE_EQUALS)
         printf("ERROR: Two or more \'=\' symbols\n");
-    if (errorCode == -4)
+    if (errorCode == POWER_MORE_THAN_TWO)
         printf("ERROR: Power of your equation is more then two\n");
-    if (errorCode == -5)
+    if (errorCode == TWO_OR_MORE_FRACTIONAL)
         printf("ERROR: Two or more \'.\' symbols in one number\n");
-    if (errorCode == -6)
+    if (errorCode == FLOAT_EXPONENTIAL)
         printf("ERROR: Exponential part can be only integer\n");
-    if (errorCode == -7)
+    if (errorCode == TWO_OR_MORE_EXPONENTIAL)
         printf("ERROR: In one number can be only one exponential part\n");
-    if (errorCode == -8)
+    if (errorCode == NUM_AFTER_X)
         printf("ERROR: After \"x\" expected *, /, +, -");
 }
 
@@ -347,13 +267,13 @@ void output(double a, double b, double c, int err, int accuracy)
     }
 }
 
-int getAccuracy(void)
+int getAccuracy()
 {
     int accuracy = 0;
     char v = 0;
     printf("Enter accuracy of output: ");
     while ((v = getchar()) != '\n'){ // считывание точности
-    if (!(isDigit(v)) || (accuracy == 0 && v == '0')){
+    if (!(isdigit(v)) || (accuracy == 0 && v == '0')){
         skipInput();
         accuracy = 0;
         printf("Wrong input. Try again: ");
@@ -374,4 +294,3 @@ void goodBye()
 {
     printf("Thank you for using my program. Good bye!");
 }
-*/

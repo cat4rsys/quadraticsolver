@@ -23,7 +23,19 @@ goodBye        - final func. just says good bye for user
 const double eps = 1e-37;
 const int normalAccuracy = 3;
 
-void mainmenu(char * choice);
+enum SolverErrors
+{
+    RETURN_IN_MAIN_MENU = 1,
+    UNKNOWN_SYMBOL,
+    TWO_OR_MORE_EQUALS,
+    POWER_MORE_THAN_TWO,
+    TWO_OR_MORE_FRACTIONAL,
+    FLOAT_EXPONENTIAL,
+    TWO_OR_MORE_EXPONENTIAL,
+    NUM_AFTER_X
+};
+
+void mainMenu(char * choice);
 
 void simpleMode(void);
 
