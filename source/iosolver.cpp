@@ -18,9 +18,11 @@ void mainMenu(char * u)
     printf("Or enter \"q\" for quit\n");
 
     *u = getchar();
-    if (getchar() != '\n' || (*u != 'b' && *u != 'a' && *u != 'q')) {
+    char temp = 0;
+    while ((temp = getchar()) != '\n' || (*u != 'b' && *u != 'a' && *u != 'q')) {
         printf("Wrong input. Try again:\n");
-        skipInput();
+        if (temp != '\n')
+            skipInput();
         *u = getchar();
     }
 }
@@ -48,13 +50,133 @@ void detailMode()
     printf("Program can't solve equations with brackets.\n");
     printf("Program ignores blanks.\n");
     printf("For writing square of x you can use \"xx\"\n");
-    input(koef);
-    if (errorCode == RETURN_IN_MAIN_MENU)
+    if (input(koef) == RETURN_IN_MAIN_MENU)
         return;
     int accuracy = getAccuracy();
     output(koef[2], koef[1], koef[0], errorCode, accuracy);
     printf("Enter anything for exit to the menu\n");
     skipInput();
+}
+
+SolverErrors input(double coefficient[])
+{
+    int part = LEFT_PART;
+    SolverErrors errorCode = NORMAL;
+    char prevSymbol = 0;
+    char symbol = getchar();
+    int sign = +1;
+    while (symbol != '\n') {
+        if (symbol == 'q' && prevSymbol == 0)
+            return readExit();
+        if (symbol == ' ');
+        else if (symbol == '+' || symbol == '-') {
+            if (prevSymbol == '+' || prevSymbol == '-' || prevSymbol == '*' || prevSymbol == '/') {
+                skipInput();
+                return TOO_MANY_OPERATIONS;
+            }
+            sign = readSign(symbol, part);
+        }
+        else if (symbol == '=') {
+            sign = -1;
+            if (part == LEFT_PART)
+                part = RIGHT_PART;
+            else {
+                skipInput();
+                return TWO_OR_MORE_EQUALS;
+            }
+        }
+        else if (symbol == '\n') {
+            return NORMAL;
+        }
+        else if (isBeginnigMonomial(symbol)) {
+            double num = 0;
+            int power = 0;
+            if ((errorCode = readMonomial(&symbol, &prevSymbol, &power, &num)) == NORMAL) {
+                record(sign, num, power, coefficient);
+                continue;
+            }
+            else {
+                skipInput();
+                return errorCode;
+            }
+        }
+        else {
+            skipInput();
+            return UNKNOWN_SYMBOL;
+        }
+        if (errorCode != NORMAL) {
+            skipInput();
+            return errorCode;
+        }
+        prevSymbol = symbol;
+        symbol = getchar();
+    }
+    return NORMAL;
+}
+
+SolverErrors record(int sign, double num, int power, double coefficient[])
+{
+    if (power > 2) {
+        skipInput();
+        return POWER_MORE_THAN_TWO;
+    }
+    coefficient[power] += sign * num;
+    return NORMAL;
+}
+
+void error(SolverErrors errorCode)
+{
+    if (errorCode == UNKNOWN_SYMBOL)
+        printf("ERROR: Unknown symbol in input\n");
+    if (errorCode == TWO_OR_MORE_EQUALS)
+        printf("ERROR: Two or more \'=\' symbols\n");
+    if (errorCode == POWER_MORE_THAN_TWO)
+        printf("ERROR: Power of your equation is more then two\n");
+    if (errorCode == TWO_OR_MORE_FRACTIONAL)
+        printf("ERROR: Two or more \'.\' symbols in one number\n");
+    if (errorCode == FLOAT_EXPONENTIAL)
+        printf("ERROR: Exponential part can be only integer\n");
+    if (errorCode == TWO_OR_MORE_EXPONENTIAL)
+        printf("ERROR: In one number can be only one exponential part\n");
+    if (errorCode == NUM_AFTER_X)
+        printf("ERROR: After \"x\" expected *, /, +, -\n");
+    if (errorCode == TOO_MANY_OPERATIONS)
+        printf("ERROR: You can't write symbol of operation after symbol of operation.\n");
+}
+
+void output(double a, double b, double c, SolverErrors errorCode, int accuracy)
+{
+    double d = 0;
+    if (errorCode == NORMAL){
+        d = b * b - 4 * a * c;
+        if (fabs(a) > eps) {
+            if (fabs(d) < eps)
+                printf("x1 = x2 = %.*e\n", accuracy, - b / (2.0 * a) );
+            else if (d >= 0) {
+                d = sqrt(d);
+                double firstRoot = (-b + d) / (2 * a);
+                double secondRoot = (-b - d) / (2 * a);
+                printf("x1 = %.*e, x2 = %.*e\n", accuracy, firstRoot, accuracy, secondRoot);
+            }
+            else {
+                d = sqrt(-d);
+                double realRoot = -b / (2.0 * a);
+                double imaginaryRoot = d / (2.0 * a);
+                printf("x1 = %.*e + %.*e * i, x2 = %.*e + %.*e * i.\n", accuracy, realRoot, imaginaryRoot, realRoot, accuracy, realRoot, accuracy, imaginaryRoot);
+            }
+        }
+        else if (fabs(b) > eps) {
+            double root = - c / b;
+            printf("Equation is linear. x = %.*e.\n", accuracy, root);
+        }
+        else if (fabs(c) > eps)
+            printf("The equation has NO roots!\n");
+        else
+            printf("The equation has infinite number of roots.\n");
+    }
+    else{
+        error(errorCode);
+    }
 }
 
 int isBeginnigMonomial(char symbol)
