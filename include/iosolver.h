@@ -20,20 +20,28 @@ skipInput      - func, that skips all input
 goodBye        - final func. just says good bye for user
 ------------------------------------------------------------------------------------------------------*/
 
-const double eps = 1e-37;
+const double eps = 1e-25;
 const int normalAccuracy = 3;
 
-enum SolverErrors
+enum PartsOfEquation
 {
-    RETURN_IN_MAIN_MENU = 1,
+    LEFT_PART,
+    RIGHT_PART
+};
+
+/*enum SolverErrors
+{
+    NORMAL,
+    RETURN_IN_MAIN_MENU,
     UNKNOWN_SYMBOL,
     TWO_OR_MORE_EQUALS,
     POWER_MORE_THAN_TWO,
     TWO_OR_MORE_FRACTIONAL,
     FLOAT_EXPONENTIAL,
     TWO_OR_MORE_EXPONENTIAL,
-    NUM_AFTER_X
-};
+    NUM_AFTER_X,
+    TOO_MANY_OPERATIONS
+};*/
 
 void mainMenu(char * choice);
 
@@ -41,13 +49,17 @@ void simpleMode(void);
 
 void detailMode(void);
 
-void input(double coefficient[], int * errorCode);
+/*SolverErrors input(double coefficient[]);
 
-int record(int sign, double num, int ifMult, double multiplicatedNum, int tempNumInE, int numInE, int power, double coefficient[]);
+SolverErrors record(int sign, double num, int power, double coefficient[]);*/
 
-void error(int errorCode);
+//void error(int errorCode);
 
-void output(double a, double b, double c, int err, int accuracy);
+//void output(double a, double b, double c, int err, int accuracy);
+
+int isBeginnigMonomial(char symbol);
+
+int isEndingMonomial(char symbol, char prevSymbol);
 
 int getAccuracy(void);
 

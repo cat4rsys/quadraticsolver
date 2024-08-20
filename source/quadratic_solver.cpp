@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "include/read.h"
-#include "include/iosolver.h"
+#include "..\include\read.h"
+#include "..\include\iosolver.h"
 
 int main()
 {
