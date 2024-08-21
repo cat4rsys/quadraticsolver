@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <math.h>
 #include <ctype.h>
-#include "..\include\read.h"
-#include "..\include\iosolver.h"
+#include "read.h"
+#include "iosolver.h"
+#include "solve.h"
 
 SolverErrors readExit()
 {
@@ -11,7 +12,7 @@ SolverErrors readExit()
         return RETURN_IN_MAIN_MENU;
     }
     else {
-        skipInput();
+        skipInput('0');
         return UNKNOWN_SYMBOL;
     }
 }
@@ -19,7 +20,7 @@ SolverErrors readExit()
 SolverErrors readNum(char * symbol, char * prevSymbol, double * num)
 {
     if (*prevSymbol == 'x' || *prevSymbol == 'X') {
-        skipInput();
+        skipInput(*symbol);
         return NUM_AFTER_X;
     }
     int ifDot = 0;
@@ -35,7 +36,7 @@ SolverErrors readNum(char * symbol, char * prevSymbol, double * num)
                 ifDot = 1;
             else
                 return TWO_OR_MORE_FRACTIONAL;
-        readNext(&*symbol, &*prevSymbol);
+        readNext(symbol, prevSymbol);
     }
     for (; numsAfterDot > 0; numsAfterDot--)
         *num /= 10.0;
@@ -59,7 +60,7 @@ SolverErrors readE(char * symbol, char * prevSymbol, double * num)
     int signE = +1;
     int numInE = 0;
     int blockExit = 1;
-    readNext(&*symbol, &*prevSymbol);
+    readNext(symbol, prevSymbol);
     while (isdigit(*symbol) || ((*symbol == '+' || *symbol == '-') && tolower(*prevSymbol) == 'e')) {
         if (*symbol == '+')
             signE = +1;
@@ -67,7 +68,7 @@ SolverErrors readE(char * symbol, char * prevSymbol, double * num)
             signE = -1;
         if (isdigit(*symbol))
             numInE = numInE * 10 + *symbol - '0';
-        readNext(&*symbol, &*prevSymbol);
+        readNext(symbol, prevSymbol);
     }
     if (tolower(*symbol) == 'e')
         return TWO_OR_MORE_EXPONENTIAL;
@@ -91,7 +92,7 @@ SolverErrors readMultiplication(char * symbol, char * prevSymbol, double * multi
         *multiplicatedNum = *num;
     (*symbol == '*') ? *ifMult = 1: *ifMult = -1;
     *num = 0;
-    readNext(&*symbol, &*prevSymbol);
+    readNext(symbol, prevSymbol);
     return NORMAL;
 }
 
@@ -115,28 +116,29 @@ SolverErrors readMonomial(char * symbol, char * prevSymbol, int * power, double 
     int ifMult = 0;
     double num = 0;
     double multiplicatedNum = 0;
+
     while (!isEndingMonomial(*symbol, *prevSymbol)) {
         if (*symbol == 'x' || *symbol == 'X') {
-            if ((errorCode = readVar(ifMult, &*power, ifNum, &num)) != NORMAL)
+            if ((errorCode = readVar(ifMult, power, ifNum, &num)) != NORMAL)
                 return errorCode;
-            readNext(&*symbol, &*prevSymbol);
+            readNext(symbol, prevSymbol);
         }
         else if (*symbol == '*' || *symbol == '/') {
-            if ((errorCode = readMultiplication(&*symbol, &*prevSymbol, &multiplicatedNum, &num, &ifMult)) != NORMAL)
+            if ((errorCode = readMultiplication(symbol, prevSymbol, &multiplicatedNum, &num, &ifMult)) != NORMAL)
                 return errorCode;
             ifNum = 0;
         }
         else if (*symbol == 'e' || *symbol =='E') {
-            if ((errorCode = readE(&*symbol, &*prevSymbol, &num)) != NORMAL)
+            if ((errorCode = readE(symbol, prevSymbol, &num)) != NORMAL)
                 return errorCode;
         }
         else if (isdigit(*symbol)) {
-            if ((errorCode = readNum(&*symbol, &*prevSymbol, &num)) != NORMAL)
+            if ((errorCode = readNum(symbol, prevSymbol, &num)) != NORMAL)
                 return errorCode;
             ifNum = 1;
         }
         else if (*symbol == ' ') {
-            readNext(&*symbol, &*prevSymbol);
+            readNext(symbol, prevSymbol);
         }
         else
             return UNKNOWN_SYMBOL;
@@ -148,7 +150,7 @@ SolverErrors readMonomial(char * symbol, char * prevSymbol, int * power, double 
     case 1:
         *number = multiplicatedNum * num;
         break;
-    case 2:
+    case -1:
         *number = multiplicatedNum / num;
         break;
     }
@@ -159,4 +161,19 @@ void readNext(char * symbol, char * prevSymbol)
 {
     *prevSymbol = *symbol;
     *symbol = getchar();
+}
+
+ModesOfWork readMode(char symbol)
+{
+    switch(symbol){
+    case 't':
+        return TEST;
+    case 'a':
+        return SIMPLE;
+    case 'b':
+        return DETAIL;
+    case 'q':
+        return EXIT;
+    }
+    return EXIT;
 }

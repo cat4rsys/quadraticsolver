@@ -1,18 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "..\include\read.h"
-#include "..\include\iosolver.h"
+#include "read.h"
+#include "iosolver.h"
+#include "solve.h"
 
 int main()
 {
-    char choice = 0;
+    ModesOfWork mode = pickAction();
 
-    mainMenu(&choice);
-    while (choice != 'q') {
-        (choice == 'a') ? simpleMode() : detailMode();
+    while (mode != EXIT) {
+        doAction(mode);
         system("cls");
-        mainMenu(&choice);
+        mode = pickAction();
     }
+
     goodBye();
 }
