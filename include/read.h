@@ -69,21 +69,22 @@ SolverErrors readVar(int * ifMult, int * power, int ifNum, double * num);
 /// @return ifMult           - if user wrote '/' equals -1, if user wrote '*' equals 1, if user \n
 ///                            did not wrote one of this symbols before in this monomial equals 0
 /// @return errorCode        - code of error, if it is in input, or NORMAL if input correct
+///-----------------------------------------------------------------------------------------------
 
 SolverErrors readMultiplication(char * symbol, char * prevSymbol, double * multiplicatedNum, double * num, int * ifMult);
 
-///-------------------------------------------readSign---------------------------------------------
+///-------------------------------------------readSign--------------------------------------------
 //! Reads + or - between monomials
 //!
 //! @param symbol           - symbol, that was enterred between two monomials
 //! @param part             - left or right part of equation?
 //!
 //! @return sign of next monomial
-///------------------------------------------------------------------------------------------------
+///-----------------------------------------------------------------------------------------------
 
 int readSign(char symbol, int part);
 
-///------------------------------------------readMonomial------------------------------------------
+///------------------------------------------readMonomial-----------------------------------------
 /// \n Reads one monomial
 /// @param symbol           - enterred by user symbol
 /// @param prevSymbol       - previously enterred by user symbol
@@ -91,6 +92,18 @@ int readSign(char symbol, int part);
 /// @param number           - coefficient of monomial
 ///
 /// @return power and coefficient of entered monomial
-///------------------------------------------------------------------------------------------------
+///-----------------------------------------------------------------------------------------------
 
 SolverErrors readMonomial(char * symbol, char * prevSymbol, int * power, double * number);
+
+///--------------------------------------------readNext-------------------------------------------
+/// \n Records symbol and reads next
+///
+/// @param symbol           - processed symbol
+/// @param prevSymbol       - previously processed symbol
+///
+/// @return symbol          - new, not-processed symbol
+/// @return prevSymbol      - processed symbol (before readNext - symbol)
+///-----------------------------------------------------------------------------------------------
+
+void readNext(char * symbol, char * prevSymbol);

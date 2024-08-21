@@ -1,8 +1,8 @@
-#ifndef BLOCK
-#define BLOCK
+#ifndef H_IOSOLVER
+#define H_IOSOLVER
 
-const double eps = 1e-25;
-const int normalAccuracy = 3;
+const double eps            = 1e-25;
+const int    normalAccuracy = 3;
 
 enum PartsOfEquation
 {

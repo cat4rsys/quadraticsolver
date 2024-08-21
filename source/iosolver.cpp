@@ -60,7 +60,7 @@ void detailMode()
 
 SolverErrors input(double coefficient[])
 {
-    int part = LEFT_PART;
+    PartsOfEquation part = LEFT_PART;
     SolverErrors errorCode = NORMAL;
     char prevSymbol = 0;
     char symbol = getchar();
@@ -68,7 +68,7 @@ SolverErrors input(double coefficient[])
     while (symbol != '\n') {
         if (symbol == 'q' && prevSymbol == 0)
             return readExit();
-        if (symbol == ' ');
+        else if (symbol == ' ');
         else if (symbol == '+' || symbol == '-') {
             if (prevSymbol == '+' || prevSymbol == '-' || prevSymbol == '*' || prevSymbol == '/') {
                 skipInput();
@@ -108,8 +108,7 @@ SolverErrors input(double coefficient[])
             skipInput();
             return errorCode;
         }
-        prevSymbol = symbol;
-        symbol = getchar();
+        readNext(&symbol, &prevSymbol);
     }
     return NORMAL;
 }

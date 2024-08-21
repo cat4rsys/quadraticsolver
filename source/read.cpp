@@ -35,8 +35,7 @@ SolverErrors readNum(char * symbol, char * prevSymbol, double * num)
                 ifDot = 1;
             else
                 return TWO_OR_MORE_FRACTIONAL;
-        *prevSymbol = *symbol;
-        *symbol = getchar();
+        readNext(&*symbol, &*prevSymbol);
     }
     for (; numsAfterDot > 0; numsAfterDot--)
         *num /= 10.0;
@@ -60,8 +59,7 @@ SolverErrors readE(char * symbol, char * prevSymbol, double * num)
     int signE = +1;
     int numInE = 0;
     int blockExit = 1;
-    *prevSymbol = *symbol;
-    *symbol = getchar();
+    readNext(&*symbol, &*prevSymbol);
     while (isdigit(*symbol) || ((*symbol == '+' || *symbol == '-') && tolower(*prevSymbol) == 'e')) {
         if (*symbol == '+')
             signE = +1;
@@ -69,8 +67,7 @@ SolverErrors readE(char * symbol, char * prevSymbol, double * num)
             signE = -1;
         if (isdigit(*symbol))
             numInE = numInE * 10 + *symbol - '0';
-        *prevSymbol = *symbol;
-        *symbol = getchar();
+        readNext(&*symbol, &*prevSymbol);
     }
     if (tolower(*symbol) == 'e')
         return TWO_OR_MORE_EXPONENTIAL;
@@ -94,8 +91,7 @@ SolverErrors readMultiplication(char * symbol, char * prevSymbol, double * multi
         *multiplicatedNum = *num;
     (*symbol == '*') ? *ifMult = 1: *ifMult = -1;
     *num = 0;
-    *prevSymbol = *symbol;
-    *symbol = getchar();
+    readNext(&*symbol, &*prevSymbol);
     return NORMAL;
 }
 
@@ -123,8 +119,7 @@ SolverErrors readMonomial(char * symbol, char * prevSymbol, int * power, double 
         if (*symbol == 'x' || *symbol == 'X') {
             if ((errorCode = readVar(ifMult, &*power, ifNum, &num)) != NORMAL)
                 return errorCode;
-            *prevSymbol = *symbol;
-            *symbol = getchar();
+            readNext(&*symbol, &*prevSymbol);
         }
         else if (*symbol == '*' || *symbol == '/') {
             if ((errorCode = readMultiplication(&*symbol, &*prevSymbol, &multiplicatedNum, &num, &ifMult)) != NORMAL)
@@ -139,6 +134,9 @@ SolverErrors readMonomial(char * symbol, char * prevSymbol, int * power, double 
             if ((errorCode = readNum(&*symbol, &*prevSymbol, &num)) != NORMAL)
                 return errorCode;
             ifNum = 1;
+        }
+        else if (*symbol == ' ') {
+            readNext(&*symbol, &*prevSymbol);
         }
         else
             return UNKNOWN_SYMBOL;
@@ -155,4 +153,10 @@ SolverErrors readMonomial(char * symbol, char * prevSymbol, int * power, double 
         break;
     }
     return NORMAL;
+}
+
+void readNext(char * symbol, char * prevSymbol)
+{
+    *prevSymbol = *symbol;
+    *symbol = getchar();
 }
