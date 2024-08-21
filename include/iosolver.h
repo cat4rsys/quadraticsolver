@@ -4,6 +4,7 @@
 const double eps            = 1e-25;
 const int    normalAccuracy = 3;
 const int    infRoots       = 100;
+const int    numberOfTests  = 8;
 
 enum PartsOfEquation
 {
@@ -16,12 +17,28 @@ enum ResultOfTest
     CORRECT,
     WRONG
 };
+
 enum ModesOfWork
 {
     SIMPLE,
     DETAIL,
     TEST,
     EXIT
+};
+
+enum NumberOfRoots
+{
+    ZERO_ROOTS,
+    ONE_ROOT,
+    TWO_ROOTS,
+    INF_ROOTS
+};
+
+enum StatusDouble
+{
+    GREATER,
+    EQUALS,
+    LESS
 };
 
 enum SolverErrors
@@ -59,7 +76,7 @@ typedef struct
 {
     double x1;
     double x2;
-    int numberOfRoots;
+    NumberOfRoots numberOfRoots;
 } Roots;
 
 typedef struct
@@ -70,8 +87,21 @@ typedef struct
     double c;
     double x1;
     double x2;
-    int numberOfRoots;
+    NumberOfRoots numberOfRoots;
 } Test;
+
+const Test test_array[] = {
+    {1, 1, 4, 4, -2, 0, ONE_ROOT},
+    {2, 1, 0, -1.44, -1.2, 1.2, TWO_ROOTS},
+    {3, 0, 3, 6, -2, 0, ONE_ROOT},
+    {4, 3, 6, 0, -2, 0, TWO_ROOTS},
+    {5, 3, -6, 0, 0, 2, TWO_ROOTS},
+    {6, 0, 0, 1, 0, 0, ZERO_ROOTS},
+    {7, 0, 0, 0, 0, 0, INF_ROOTS},
+    {8, 1, 3, -4, -4, 1, TWO_ROOTS}
+};
+
+void mainMenu(void);
 
 ModesOfWork pickAction(void);
 
@@ -89,9 +119,9 @@ void testMode(void);
 /// @return coefficient[]   - array for coefficients c, b and a
 ///------------------------------------------------------------------------------------------------
 
-SolverErrors input(Coeffs * coefficient);
+SolverErrors inputOfEquation(Coeffs * coefficient);
 
-SolverErrors record(int sign, double num, int power, Coeffs * coefficient);
+SolverErrors writeMonomial(int sign, double num, int power, Coeffs * coefficient);
 
 ///-----------------------------------------------error--------------------------------------------
 /// \n Prints error, coded by errorCode
@@ -99,11 +129,11 @@ SolverErrors record(int sign, double num, int power, Coeffs * coefficient);
 /// @param [in] errorCode - code of error
 ///------------------------------------------------------------------------------------------------
 
-void error(SolverErrors errorCode);
+void printInputError(SolverErrors errorCode);
 
 void getType(Coeffs * coefficient);
 
-void output(Coeffs coefficient, SolverErrors errorCode, int accuracy);
+void printRoots(Coeffs coefficient, SolverErrors errorCode, int accuracy);
 
 int isBeginnigMonomial(char symbol);
 
@@ -115,21 +145,8 @@ void skipInput(char symbol);
 
 void goodBye(void);
 
-int doubleIsZero(double number);
+StatusDouble compareDouble(double number1, double number2);
 
 ResultOfTest test(Test test);
-
-const int numberOfTests = 8;
-
-const Test test_array[] = {
-    {1, 1, 4, 4, -2, 0, 1},
-    {2, 1, 0, -1.44, -1.2, 1.2, 2},
-    {3, 0, 3, 6, -2, 0, 1},
-    {4, 3, 6, 0, -2, 0, 2},
-    {5, 3, -6, 0, 0, 2, 2},
-    {6, 0, 0, 1, 0, 0, 0},
-    {7, 0, 0, 0, 0, 0, infRoots},
-    {8, 1, 3, -4, -4, 1, 2}
-};
 
 #endif // H_IOSOLVER

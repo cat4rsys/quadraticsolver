@@ -6,7 +6,7 @@
 #include "iosolver.h"
 #include "solve.h"
 
-ModesOfWork pickAction()
+void mainMenu()
 {
     printf("Quadratic equation solver\n");
     printf("Program has two modes of work:\n");
@@ -18,11 +18,14 @@ ModesOfWork pickAction()
     printf("b - Detail mode\n");
     printf("t - Test mode\n");
     printf("Or enter \"q\" for quit\n");
+}
 
+ModesOfWork pickAction()
+{
     char action = getchar();
     char temp = 0;
 
-    while ((temp = getchar()) != '\n' || (action != 'b' && action != 'a' && action != 'q' && action != 't')) {
+    while ( (temp = getchar()) != '\n' || (action != 'b' && action != 'a' && action != 'q' && action != 't') ) {
         printf("Wrong input. Try again:\n");
         skipInput(temp);
         action = getchar();
@@ -53,11 +56,11 @@ void simpleMode()
     SolverErrors errorCode = NORMAL;
     Coeffs coefficients = {};
 
-    while (errorCode != RETURN_IN_MAIN_MENU) {
+    while ( errorCode != RETURN_IN_MAIN_MENU ) {
         coefficients = {0, 0, 0};
 
-        errorCode = input(&coefficients);
-        output(coefficients, errorCode, normalAccuracy);
+        errorCode = inputOfEquation(&coefficients);
+        printRoots(coefficients, errorCode, normalAccuracy);
     }
 }
 
@@ -71,12 +74,12 @@ void detailMode()
     printf("Program ignores blanks.\n");
     printf("For writing square of x you can use \"xx\"\n");
 
-    if (input(&coefficients) == RETURN_IN_MAIN_MENU)
+    if ( inputOfEquation(&coefficients) == RETURN_IN_MAIN_MENU )
         return;
 
     int accuracy = getAccuracy();
 
-    output(coefficients, errorCode, accuracy);
+    printRoots(coefficients, errorCode, accuracy);
 
     printf("Enter anything for exit to the menu\n");
     skipInput('0');
@@ -87,14 +90,16 @@ void testMode()
     int i = 0;
 
     for(; i == numberOfTests - 1; i++) {
-        test(test_array[i]);
+        if ( test(test_array[i]) == WRONG ) {
+            return;
+        }
     }
 
     printf("All tests are correct. Enter anything for exit to the menu\n");
     skipInput('0');
 }
 
-SolverErrors input(Coeffs * coefficient)
+SolverErrors inputOfEquation(Coeffs * coefficient)
 {
     PartsOfEquation part = LEFT_PART;
     SolverErrors errorCode = NORMAL;
@@ -102,34 +107,44 @@ SolverErrors input(Coeffs * coefficient)
     char symbol = getchar();
     int sign = +1;
 
-    while (symbol != '\n') {
-        if ( symbol == 'q' && prevSymbol == 0 )
+    while ( symbol != '\n' ) {
+        if ( symbol == 'q' && prevSymbol == 0 ) {
             return readExit();
-        else if (symbol == ' ');
-        else if (symbol == '+' || symbol == '-') {
-            if (prevSymbol == '+' || prevSymbol == '-' || prevSymbol == '*' || prevSymbol == '/') {
+        }
+
+        else if ( symbol == ' ' );
+
+        else if ( symbol == '+' || symbol == '-' ) {
+            if ( prevSymbol == '+' || prevSymbol == '-' || prevSymbol == '*' || prevSymbol == '/' ) {
                 skipInput(symbol);
                 return TOO_MANY_OPERATIONS;
             }
+
             sign = readSign(symbol, part);
         }
-        else if (symbol == '=') {
+
+        else if ( symbol == '=' ) {
             sign = -1;
-            if (part == LEFT_PART)
+
+            if (part == LEFT_PART) {
                 part = RIGHT_PART;
+            }
             else {
                 skipInput(symbol);
                 return TWO_OR_MORE_EQUALS;
             }
         }
-        else if (symbol == '\n') {
+
+        else if ( symbol == '\n' ) {
             return NORMAL;
         }
-        else if (isBeginnigMonomial(symbol)) {
+
+        else if ( isBeginnigMonomial(symbol) ) {
             double num = 0;
             int power = 0;
-            if ((errorCode = readMonomial(&symbol, &prevSymbol, &power, &num)) == NORMAL) {
-                errorCode = record(sign, num, power, &*coefficient);
+
+            if ( (errorCode = readMonomial(&symbol, &prevSymbol, &power, &num)) == NORMAL ) {
+                errorCode = writeMonomial(sign, num, power, &*coefficient);
                 continue;
             }
             else {
@@ -137,23 +152,29 @@ SolverErrors input(Coeffs * coefficient)
                 return errorCode;
             }
         }
+
         else {
             skipInput(symbol);
             return UNKNOWN_SYMBOL;
         }
-        if (errorCode != NORMAL) {
+
+        if ( errorCode != NORMAL ) {
             skipInput(symbol);
             return errorCode;
         }
+
         readNext(&symbol, &prevSymbol);
     }
-    if (part = LEFT_PART)
+
+    if ( part == LEFT_PART ) {
         return NO_EQUAL;
-    else
+    }
+    else {
         return NORMAL;
+    }
 }
 
-SolverErrors record(int sign, double num, int power, Coeffs * coefficient)
+SolverErrors writeMonomial(int sign, double num, int power, Coeffs * coefficient)
 {
     switch (power) {
     case 2:
@@ -171,40 +192,49 @@ SolverErrors record(int sign, double num, int power, Coeffs * coefficient)
     return NORMAL;
 }
 
-// TODO printSolvingError
-void error(SolverErrors errorCode)
+void printInputError(SolverErrors errorCode)
 {
-    // TODO switch
-    if (errorCode == UNKNOWN_SYMBOL)
+    switch (errorCode) {
+    case UNKNOWN_SYMBOL:
         printf("ERROR: Unknown symbol in input\n");
-    if (errorCode == TWO_OR_MORE_EQUALS)
+        break;
+    case TWO_OR_MORE_EQUALS:
         printf("ERROR: Two or more \'=\' symbols\n");
-    if (errorCode == INCORRECT_POWER)
+        break;
+    case INCORRECT_POWER:
         printf("ERROR: Power of your equation is more then two or contains monomials with negative power\n");
-    if (errorCode == TWO_OR_MORE_FRACTIONAL)
+        break;
+    case TWO_OR_MORE_FRACTIONAL:
         printf("ERROR: Two or more \'.\' symbols in one number\n");
-    if (errorCode == FLOAT_EXPONENTIAL)
+        break;
+    case FLOAT_EXPONENTIAL:
         printf("ERROR: Exponential part can be only integer\n");
-    if (errorCode == TWO_OR_MORE_EXPONENTIAL)
+        break;
+    case TWO_OR_MORE_EXPONENTIAL:
         printf("ERROR: In one number can be only one exponential part\n");
-    if (errorCode == NUM_AFTER_X)
+        break;
+    case NUM_AFTER_X:
         printf("ERROR: After \"x\" expected *, /, +, -\n");
-    if (errorCode == TOO_MANY_OPERATIONS)
+        break;
+    case TOO_MANY_OPERATIONS:
         printf("ERROR: You can't write symbol of operation after symbol of operation.\n");
-    if (errorCode == NO_EQUAL)
+        break;
+    case NO_EQUAL:
         printf("ERROR: Your equation has not \'=\' symbol.\n");
+        break;
+    }
 }
 
 TypeOfEquation getType(Coeffs coefficient)
 {
-    if (doubleIsZero(coefficient.a)) {
-        if (doubleIsZero(coefficient.b))
+    if ( compareDouble(coefficient.a, 0) == EQUALS ) {
+        if ( compareDouble(coefficient.b, 0) == EQUALS )
             return WITHOUT_VARIABLE;
         else
             return LINEAR;
     }
     else {
-        if (doubleIsZero(coefficient.c))
+        if ( compareDouble(coefficient.c, 0) == EQUALS )
             return SQUARE_WITHOUT_C;
         else
             return SQUARE;
@@ -213,47 +243,53 @@ TypeOfEquation getType(Coeffs coefficient)
 
 // TODO asserts
 // TODO naming
-void output(Coeffs coefficient, SolverErrors errorCode, int accuracy)
+void printRoots(Coeffs coefficient, SolverErrors errorCode, int accuracy)
 {
     if (errorCode == NORMAL) {
-        coefficient.type = getType(coefficient);
         Roots root = {};
+
+        coefficient.type = getType(coefficient);
         solveEquation(coefficient, &root);
+
         switch(root.numberOfRoots) {
-        case infRoots:
+        case INF_ROOTS:
             printf("The equation has infinite number of roots.\n");
             break;
-        case 0:
+        case ZERO_ROOTS:
             printf("The equation has NO roots!\n");
             break;
-        case 1:
+        case ONE_ROOT:
             printf("x = %.*e.\n", accuracy, root.x1);
             break;
-        case 2:
+        case TWO_ROOTS:
             printf("x1 = %.*e, x2 = %.*e\n", accuracy, root.x1, accuracy, root.x2);
             break;
         }
     }
-    else{
-        error(errorCode);
+    else {
+        printInputError(errorCode);
     }
 }
 
 int isBeginnigMonomial(char symbol)
 {
-    if (isdigit(symbol) || symbol == 'x')
+    if (isdigit(symbol) || symbol == 'x') {
         return 1;
-    else
+    }
+    else {
         return 0;
+    }
 }
 
 int isEndingMonomial(char symbol, char prevSymbol)
 {
-    if ((symbol == '+' || symbol == '-' || symbol == '\n' || symbol == '=') &&
-        (prevSymbol != 'x' || prevSymbol != 'X' || prevSymbol != 'e' || prevSymbol != 'E'))
+    if ( (symbol == '+' || symbol == '-' || symbol == '\n' || symbol == '=') &&
+        (prevSymbol != 'x' || prevSymbol != 'X' || prevSymbol != 'e' || prevSymbol != 'E') ) {
         return 1;
-    else
+    }
+    else {
         return 0;
+    }
 }
 
 int getAccuracy()
@@ -263,14 +299,15 @@ int getAccuracy()
 
     printf("Enter accuracy of output: ");
 
-    while ((v = getchar()) != '\n') {
-        if (!(isdigit(v)) || (accuracy == 0 && v == '0')) {
+    while ( (v = getchar()) != '\n' ) {
+        if ( !(isdigit(v)) || (accuracy == 0 && v == '0') ) {
             skipInput(v);
             accuracy = 0;
             printf("Wrong input. Try again: ");
         }
-        else
+        else {
             accuracy = accuracy * 10 + v - '0';
+        }
     }
 
     return accuracy;
@@ -278,9 +315,11 @@ int getAccuracy()
 
 void skipInput(char symbol)
 {
-    if (symbol != '\n')
-        while (getchar() != '\n')
+    if (symbol != '\n') {
+        while (getchar() != '\n') {
             continue;
+        }
+    }
 }
 
 void goodBye()
@@ -288,11 +327,17 @@ void goodBye()
     printf("Thank you for using my program. Good bye!");
 }
 
-int doubleIsZero(double number)
+StatusDouble compareDouble(double number1, double number2)
 {
-    if (fabs(number) < eps)
-        return 1;
-    return 0;
+    if ( fabs(number1 - number2) < eps ) {
+        return EQUALS;
+    }
+
+    if ( (number1 - number2) > eps ) {
+        return GREATER;
+    }
+
+    return LESS;
 }
 
 ResultOfTest test(Test test)
@@ -304,12 +349,12 @@ ResultOfTest test(Test test)
     coefficients.type = getType(coefficients);
     solveEquation(coefficients, &calculatedRoots);
 
-    if (calculatedRoots.x1 == realRoots.x1 && calculatedRoots.x2 == realRoots.x2 &&
-        calculatedRoots.numberOfRoots == realRoots.numberOfRoots) {
+    if ( calculatedRoots.x1 == realRoots.x1 && calculatedRoots.x2 == realRoots.x2 &&
+        calculatedRoots.numberOfRoots == realRoots.numberOfRoots ) {
         return CORRECT;
     }
 
-    printf("ERROR at test ¹%d (a = %lg, b = %lg, c = %lg):\n", test.numberOfThisTest, coefficients.a, coefficients.b, coefficients.c);
+    printf("ERROR at test â„–%d (a = %lg, b = %lg, c = %lg):\n", test.numberOfThisTest, coefficients.a, coefficients.b, coefficients.c);
     printf("Expected: x1 = %lg, x2 = %lg, number of roots = %d\n", realRoots.x1, realRoots.x2, realRoots.numberOfRoots);
     printf("Calculated: x1 = %lg, x2 = %lg, number of roots = %d\n",
            calculatedRoots.x1, calculatedRoots.x2, calculatedRoots.numberOfRoots);

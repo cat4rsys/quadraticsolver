@@ -5,71 +5,80 @@
 #include "iosolver.h"
 #include "solve.h"
 
-void solveSquare(Coeffs coefficient, Roots * root)
+void solveSquare(Coeffs coefficients, Roots * root)
 {
-    double discriminant = (coefficient.b) * (coefficient.b) - 4 * (coefficient.a) * (coefficient.c);
-    if (doubleIsZero(discriminant)) {
-        root->x1 = -(coefficient.b) / (2 * (coefficient.a));
-        root->numberOfRoots = 1;
+    double discriminant = (coefficients.b) * (coefficients.b) - 4 * (coefficients.a) * (coefficients.c);
+
+    if ( compareDouble(discriminant, 0) == EQUALS ) {
+        root->x1 = - (coefficients.b) / (2 * (coefficients.a));
+        root->numberOfRoots = ONE_ROOT;
     }
-    else if (discriminant < 0) // Brackets
-        root->numberOfRoots = 0;
-    else {
+
+    else if ( compareDouble(discriminant, 0) == LESS ) {
+        root->numberOfRoots = ZERO_ROOTS;
+    }
+
+    else if ( compareDouble(discriminant, 0) == GREATER ) {
         double sqrtDiscriminant = sqrt(discriminant);
-        // TODO blank line
-        root->x1 = (-(coefficient.b) - sqrtDiscriminant) / (2 * (coefficient.a));
-        root->x2 = (-(coefficient.b) + sqrtDiscriminant) / (2 * (coefficient.a));
-        root->numberOfRoots = 2;
+
+        root->x1 = ( - (coefficients.b) - sqrtDiscriminant) / (2 * (coefficients.a));
+        root->x2 = ( - (coefficients.b) + sqrtDiscriminant) / (2 * (coefficients.a));
+        root->numberOfRoots = TWO_ROOTS;
     }
 }
 
-void solveSquareWithoutC(Coeffs coefficient, Roots * root) // Make coeffs const ptr
+void solveSquareWithoutC(Coeffs coefficients, Roots * root)
 {
-    double anotherRoot = - (coefficient.b) / (coefficient.a);
-    if (doubleIsZero(anotherRoot)) {
+    double anotherRoot = - (coefficients.b) / (coefficients.a);
+
+    if ( compareDouble(anotherRoot, 0) == EQUALS ) {
         root->x1 = 0;
-        root->numberOfRoots = 1;
+        root->numberOfRoots = ONE_ROOT;
     }
-    else if (anotherRoot > 0) { // TODO use EPS
+
+    else if ( compareDouble(anotherRoot, 0) == LESS ) {
         root->x1 = 0;
         root->x2 = anotherRoot;
-        root->numberOfRoots = 2;
+        root->numberOfRoots = TWO_ROOTS;
     }
-    else if (anotherRoot < 0) {
+
+    else if ( compareDouble(anotherRoot, 0) == GREATER ) {
         root->x2 = 0;
         root->x1 = anotherRoot;
-        root->numberOfRoots = 2;
+        root->numberOfRoots = TWO_ROOTS;
     }
 }
 
-void solveLinear(Coeffs coefficient, Roots * root) // TODO const
+void solveLinear(Coeffs coefficients, Roots * root)
 {
-    root->x1 = - (coefficient.c) / (coefficient.b);
-    root->numberOfRoots = 1;
+    root->x1 = - (coefficients.c) / (coefficients.b);
+    root->numberOfRoots = ONE_ROOT;
 }
 
-void solveWithoutVariable(Coeffs coefficient, Roots * root) // TODO const
+void solveWithoutVariable(Coeffs coefficients, Roots * root)
 {
-    if (doubleIsZero(coefficient.c))
-        root->numberOfRoots = infRoots;
-    else
-        root->numberOfRoots = 0;
+    if ( compareDouble(coefficients.c, 0) == EQUALS ) {
+        root->numberOfRoots = INF_ROOTS;
+    }
+    else {
+        root->numberOfRoots = ZERO_ROOTS;
+    }
 }
 
-void solveEquation(Coeffs coefficient, Roots * root)
+void solveEquation(Coeffs coefficients, Roots * root)
 {
-    switch(coefficient.type) {
+    switch(coefficients.type) {
     case SQUARE:
-        solveSquare(coefficient, root);
+        solveSquare(coefficients, root);
         break;
     case SQUARE_WITHOUT_C:
-        solveSquareWithoutC(coefficient, root);
+        solveSquareWithoutC(coefficients, root);
         break;
     case LINEAR:
-        solveLinear(coefficient, root);
+        solveLinear(coefficients, root);
         break;
     case WITHOUT_VARIABLE:
-        solveWithoutVariable(coefficient, root);
+        solveWithoutVariable(coefficients, root);
         break;
     }
 }
