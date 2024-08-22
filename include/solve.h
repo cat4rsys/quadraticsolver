@@ -1,11 +1,11 @@
 #include "iosolver.h"
 
-void solveSquare(Coeffs coefficient, Roots * root);
+void solveSquare(EquationData coefficient, Roots * root);
 
-void solveSquareWithoutC(Coeffs coefficient, Roots * root);
+void solveSquareWithoutC(EquationData coefficient, Roots * root);
 
-void solveLinear(Coeffs coefficient, Roots * root);
+void solveLinear(EquationData coefficient, Roots * root);
 
-void solveWithoutVariable(Coeffs coefficient, Roots * root);
+void solveWithoutVariable(EquationData coefficient, Roots * root);
 
-void solveEquation(Coeffs coefficient, Roots * root);
+void solveEquation(EquationData coefficient, Roots * root);

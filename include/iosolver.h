@@ -70,7 +70,7 @@ typedef struct
     double b;
     double c;
     TypeOfEquation type;
-} Coeffs;
+} EquationData;
 
 typedef struct
 {
@@ -88,9 +88,9 @@ typedef struct
     double x1;
     double x2;
     NumberOfRoots numberOfRoots;
-} Test;
+} TestData;
 
-const Test test_array[] = {
+const TestData test_array[] = {
     {1, 1, 4, 4, -2, 0, ONE_ROOT},
     {2, 1, 0, -1.44, -1.2, 1.2, TWO_ROOTS},
     {3, 0, 3, 6, -2, 0, ONE_ROOT},
@@ -101,17 +101,17 @@ const Test test_array[] = {
     {8, 1, 3, -4, -4, 1, TWO_ROOTS}
 };
 
-void mainMenu(void);
+void mainMenu();
 
-ModesOfWork pickAction(void);
+ModesOfWork pickAction();
 
 void doAction(ModesOfWork mode);
 
-void simpleMode(void);
+void simpleMode();
 
-void detailMode(void);
+void detailMode();
 
-void testMode(void);
+void testMode();
 
 ///--------------------------------------------input-----------------------------------------------
 /// \n Reads all equation, entered by user and records it as coefficient of ax^2 + bx + c = 0
@@ -119,9 +119,9 @@ void testMode(void);
 /// @return coefficient[]   - array for coefficients c, b and a
 ///------------------------------------------------------------------------------------------------
 
-SolverErrors inputOfEquation(Coeffs * coefficient);
+SolverErrors inputOfEquation(EquationData * coefficient);
 
-SolverErrors writeMonomial(int sign, double num, int power, Coeffs * coefficient);
+SolverErrors writeMonomial(int sign, double num, int power, EquationData * coefficient);
 
 ///-----------------------------------------------error--------------------------------------------
 /// \n Prints error, coded by errorCode
@@ -131,22 +131,22 @@ SolverErrors writeMonomial(int sign, double num, int power, Coeffs * coefficient
 
 void printInputError(SolverErrors errorCode);
 
-void getType(Coeffs * coefficient);
+TypeOfEquation getType(EquationData coefficient);
 
-void printRoots(Coeffs coefficient, SolverErrors errorCode, int accuracy);
+void printRoots(Roots root, SolverErrors errorCode, int accuracy);
 
-int isBeginnigMonomial(char symbol);
+int isBeginnigMonomial(int symbol);
 
-int isEndingMonomial(char symbol, char prevSymbol);
+int isEndingMonomial(int symbol, int prevSymbol);
 
-int getAccuracy(void);
+int getAccuracy();
 
-void skipInput(char symbol);
+void skipInput(int symbol);
 
-void goodBye(void);
+void goodBye();
 
 StatusDouble compareDouble(double number1, double number2);
 
-ResultOfTest test(Test test);
+ResultOfTest checkTest(TestData test);
 
 #endif // H_IOSOLVER

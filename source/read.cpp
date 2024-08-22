@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <ctype.h>
+#include <cassert>
 #include "read.h"
 #include "iosolver.h"
 #include "solve.h"
@@ -18,8 +19,12 @@ SolverErrors readExit()
     }
 }
 
-SolverErrors readNum(char * symbol, char * prevSymbol, double * num)
+SolverErrors readNum(int * symbol, int * prevSymbol, double * num)
 {
+    assert(symbol != NULL);
+    assert(prevSymbol != NULL);
+    assert(num != NULL);
+
     if ( *prevSymbol == 'x' || *prevSymbol == 'X' ) {
         skipInput(*symbol);
 
@@ -37,13 +42,14 @@ SolverErrors readNum(char * symbol, char * prevSymbol, double * num)
             }
         }
 
-        if ( *symbol == '.' || *symbol == ',' )
+        if ( *symbol == '.' || *symbol == ',' ) {
             if (ifDot == 0) {
                 ifDot = 1;
             }
             else {
                 return TWO_OR_MORE_FRACTIONAL;
             }
+        }
 
         readNext(symbol, prevSymbol);
     }
@@ -57,6 +63,9 @@ SolverErrors readNum(char * symbol, char * prevSymbol, double * num)
 
 SolverErrors readVar(int ifMult, int * power, int ifNum, double * num)
 {
+    assert(power != NULL);
+    assert(num != NULL);
+
     if ( !(ifNum) && (fabs(*num)) < eps ) {
         *num = 1.0;
     }
@@ -71,11 +80,14 @@ SolverErrors readVar(int ifMult, int * power, int ifNum, double * num)
     return NORMAL;
 }
 
-SolverErrors readE(char * symbol, char * prevSymbol, double * num)
+SolverErrors readE(int * symbol, int * prevSymbol, double * num)
 {
+    assert(symbol != NULL);
+    assert(prevSymbol != NULL);
+    assert(num != NULL);
+
     int signE = +1;
     int numInE = 0;
-    int blockExit = 1;
 
     readNext(symbol, prevSymbol);
 
@@ -112,8 +124,14 @@ SolverErrors readE(char * symbol, char * prevSymbol, double * num)
     return NORMAL;
 }
 
-SolverErrors readMultiplication(char * symbol, char * prevSymbol, double * multiplicatedNum, double * num, int * ifMult)
+SolverErrors readMultiplication(int * symbol, int * prevSymbol, double * multiplicatedNum, double * num, int * ifMult)
 {
+    assert(symbol != NULL);
+    assert(prevSymbol != NULL);
+    assert(multiplicatedNum != NULL);
+    assert(num != NULL);
+    assert(ifMult != NULL);
+
     if ( *prevSymbol == '+' || *prevSymbol == '-' || *prevSymbol == '*' || *prevSymbol == '/' ) {
         return TOO_MANY_OPERATIONS;
     }
@@ -133,7 +151,7 @@ SolverErrors readMultiplication(char * symbol, char * prevSymbol, double * multi
     return NORMAL;
 }
 
-int readSign(char symbol, int part)
+int readSign(int symbol, PartsOfEquation part)
 {
     if ( symbol == '+' && part == LEFT_PART ) {
         return +1;
@@ -151,8 +169,13 @@ int readSign(char symbol, int part)
     return 0;
 }
 
-SolverErrors readMonomial(char * symbol, char * prevSymbol, int * power, double * number)
+SolverErrors readMonomial(int * symbol, int * prevSymbol, int * power, double * number)
 {
+    assert(symbol != NULL);
+    assert(prevSymbol != NULL);
+    assert(power != NULL);
+    assert(number != NULL);
+
     SolverErrors errorCode = NORMAL;
     int ifNum = 0;
     int ifMult = 0;
@@ -208,18 +231,24 @@ SolverErrors readMonomial(char * symbol, char * prevSymbol, int * power, double 
     case -1:
         *number = multiplicatedNum / num;
         break;
+    default:
+        printf("UNKNOWN ERROR\n");
+        break;
     }
 
     return NORMAL;
 }
 
-void readNext(char * symbol, char * prevSymbol)
+void readNext(int * symbol, int * prevSymbol)
 {
+    assert(symbol != NULL);
+    assert(prevSymbol != NULL);
+
     *prevSymbol = *symbol;
     *symbol = getchar();
 }
 
-ModesOfWork readMode(char symbol)
+ModesOfWork readMode(int symbol)
 {
     switch(symbol){
     case 't':
@@ -230,6 +259,9 @@ ModesOfWork readMode(char symbol)
         return DETAIL;
     case 'q':
         return EXIT;
+    default:
+        printf("UNKNOWN ERROR\n");
+        break;
     }
     return EXIT;
 }

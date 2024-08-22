@@ -9,7 +9,7 @@
 /// UNKNOWN_SYMBOL
 ///-----------------------------------------------------------------------------------------------
 
-SolverErrors readExit(void);
+SolverErrors readExit();
 
 ///---------------------------------------------readNum-------------------------------------------
 /// \n Reads one number. Stops when user enters not a number
@@ -22,7 +22,7 @@ SolverErrors readExit(void);
 /// @return codeError        - code of error
 ///-----------------------------------------------------------------------------------------------
 
-SolverErrors readNum(char * symbol, char * prevSymbol, double * num);
+SolverErrors readNum(int * symbol, int * prevSymbol, double * num);
 
 ///---------------------------------------------readE---------------------------------------------
 /// \n Reads exponential part of number
@@ -35,7 +35,7 @@ SolverErrors readNum(char * symbol, char * prevSymbol, double * num);
 /// @return errorCode        - code of error
 ///-----------------------------------------------------------------------------------------------
 
-SolverErrors readE(char * symbol, char * prevSymbol, double * num);
+SolverErrors readE(int * symbol, int * prevSymbol, double * num);
 
 ///--------------------------------------------readVar--------------------------------------------
 /// \n Reads the 'x' or 'X' symbol
@@ -55,7 +55,7 @@ SolverErrors readE(char * symbol, char * prevSymbol, double * num);
 /// In this function errorCode is always NORMAL
 ///-----------------------------------------------------------------------------------------------
 
-SolverErrors readVar(int * ifMult, int * power, int ifNum, double * num);
+SolverErrors readVar(int ifMult, int * power, int ifNum, double * num);
 
 ///---------------------------------------readMultiplication--------------------------------------
 /// \n Reads the '*' or '/' symbol
@@ -71,7 +71,7 @@ SolverErrors readVar(int * ifMult, int * power, int ifNum, double * num);
 /// @return errorCode        - code of error, if it is in input, or NORMAL if input correct
 ///-----------------------------------------------------------------------------------------------
 
-SolverErrors readMultiplication(char * symbol, char * prevSymbol, double * multiplicatedNum, double * num, int * ifMult);
+SolverErrors readMultiplication(int * symbol, int * prevSymbol, double * multiplicatedNum, double * num, int * ifMult);
 
 ///-------------------------------------------readSign--------------------------------------------
 //! Reads + or - between monomials
@@ -82,7 +82,7 @@ SolverErrors readMultiplication(char * symbol, char * prevSymbol, double * multi
 //! @return sign of next monomial
 ///-----------------------------------------------------------------------------------------------
 
-int readSign(char symbol, int part);
+int readSign(int symbol, PartsOfEquation part);
 
 ///------------------------------------------readMonomial-----------------------------------------
 /// \n Reads one monomial
@@ -94,7 +94,7 @@ int readSign(char symbol, int part);
 /// @return power and coefficient of entered monomial
 ///-----------------------------------------------------------------------------------------------
 
-SolverErrors readMonomial(char * symbol, char * prevSymbol, int * power, double * number);
+SolverErrors readMonomial(int * symbol, int * prevSymbol, int * power, double * number);
 
 ///--------------------------------------------readNext-------------------------------------------
 /// \n Records symbol and reads next
@@ -106,6 +106,6 @@ SolverErrors readMonomial(char * symbol, char * prevSymbol, int * power, double 
 /// @return prevSymbol      - processed symbol (before readNext - symbol)
 ///-----------------------------------------------------------------------------------------------
 
-void readNext(char * symbol, char * prevSymbol);
+void readNext(int * symbol, int * prevSymbol);
 
-ModesOfWork readMode(char symbol);
+ModesOfWork readMode(int symbol);

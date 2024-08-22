@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <ctype.h>
+#include <cassert>
 #include "read.h"
 #include "iosolver.h"
 #include "solve.h"
@@ -22,8 +23,8 @@ void mainMenu()
 
 ModesOfWork pickAction()
 {
-    char action = getchar();
-    char temp = 0;
+    int action = getchar();
+    int temp = 0;
 
     while ( (temp = getchar()) != '\n' || (action != 'b' && action != 'a' && action != 'q' && action != 't') ) {
         printf("Wrong input. Try again:\n");
@@ -46,6 +47,11 @@ void doAction(ModesOfWork mode)
     case DETAIL:
         detailMode();
         break;
+    case EXIT:
+        break;
+    default:
+        printf("UNKNOWN ERROR\n");
+        return;
     }
 }
 
@@ -54,20 +60,25 @@ void simpleMode()
     printf("Enter your equations. To exit to the menu enter \"q\".\n");
 
     SolverErrors errorCode = NORMAL;
-    Coeffs coefficients = {};
 
     while ( errorCode != RETURN_IN_MAIN_MENU ) {
-        coefficients = {0, 0, 0};
+        EquationData coefficients = {0, 0, 0};
 
         errorCode = inputOfEquation(&coefficients);
-        printRoots(coefficients, errorCode, normalAccuracy);
+
+        Roots roots = {};
+
+        coefficients.type = getType(coefficients);
+        solveEquation(coefficients, &roots);
+
+        printRoots(roots, errorCode, normalAccuracy);
     }
 }
 
 void detailMode()
 {
     SolverErrors errorCode = NORMAL;
-    Coeffs coefficients = {};
+    EquationData coefficients = {0, 0, 0};
 
     printf("Enter your equation. To exit to the menu enter \"q\".\n");
     printf("Program can't solve equations with brackets.\n");
@@ -79,7 +90,12 @@ void detailMode()
 
     int accuracy = getAccuracy();
 
-    printRoots(coefficients, errorCode, accuracy);
+    Roots roots = {};
+
+    coefficients.type = getType(coefficients);
+    solveEquation(coefficients, &roots);
+
+    printRoots(roots, errorCode, accuracy);
 
     printf("Enter anything for exit to the menu\n");
     skipInput('0');
@@ -90,7 +106,7 @@ void testMode()
     int i = 0;
 
     for(; i == numberOfTests - 1; i++) {
-        if ( test(test_array[i]) == WRONG ) {
+        if ( checkTest(test_array[i]) == WRONG ) {
             return;
         }
     }
@@ -99,12 +115,14 @@ void testMode()
     skipInput('0');
 }
 
-SolverErrors inputOfEquation(Coeffs * coefficient)
+SolverErrors inputOfEquation(EquationData * coefficient)
 {
+    assert(coefficient != NULL);
+
     PartsOfEquation part = LEFT_PART;
     SolverErrors errorCode = NORMAL;
-    char prevSymbol = 0;
-    char symbol = getchar();
+    int prevSymbol = 0;
+    int symbol = getchar();
     int sign = +1;
 
     while ( symbol != '\n' ) {
@@ -144,7 +162,7 @@ SolverErrors inputOfEquation(Coeffs * coefficient)
             int power = 0;
 
             if ( (errorCode = readMonomial(&symbol, &prevSymbol, &power, &num)) == NORMAL ) {
-                errorCode = writeMonomial(sign, num, power, &*coefficient);
+                errorCode = writeMonomial(sign, num, power, coefficient);
                 continue;
             }
             else {
@@ -174,8 +192,10 @@ SolverErrors inputOfEquation(Coeffs * coefficient)
     }
 }
 
-SolverErrors writeMonomial(int sign, double num, int power, Coeffs * coefficient)
+SolverErrors writeMonomial(int sign, double num, int power, EquationData * coefficient)
 {
+    assert(coefficient != NULL);
+
     switch (power) {
     case 2:
         coefficient->a += sign * num;
@@ -222,10 +242,19 @@ void printInputError(SolverErrors errorCode)
     case NO_EQUAL:
         printf("ERROR: Your equation has not \'=\' symbol.\n");
         break;
+    case NORMAL:
+        printf("Equation inputed correct\n");
+        break;
+    case RETURN_IN_MAIN_MENU:
+        printf("Returning in main menu\n");
+        break;
+    default:
+        printf("UNKNOWN ERROR\n");
+        break;
     }
 }
 
-TypeOfEquation getType(Coeffs coefficient)
+TypeOfEquation getType(EquationData coefficient)
 {
     if ( compareDouble(coefficient.a, 0) == EQUALS ) {
         if ( compareDouble(coefficient.b, 0) == EQUALS )
@@ -241,16 +270,15 @@ TypeOfEquation getType(Coeffs coefficient)
     }
 }
 
-// TODO asserts
 // TODO naming
-void printRoots(Coeffs coefficient, SolverErrors errorCode, int accuracy)
+void printRoots(Roots root, SolverErrors errorCode, int accuracy)
 {
     if (errorCode == NORMAL) {
-        Roots root = {};
+        /*Roots root = {};
 
         coefficient.type = getType(coefficient);
         solveEquation(coefficient, &root);
-
+*/
         switch(root.numberOfRoots) {
         case INF_ROOTS:
             printf("The equation has infinite number of roots.\n");
@@ -264,6 +292,9 @@ void printRoots(Coeffs coefficient, SolverErrors errorCode, int accuracy)
         case TWO_ROOTS:
             printf("x1 = %.*e, x2 = %.*e\n", accuracy, root.x1, accuracy, root.x2);
             break;
+        default:
+            printf("UNKNOWN ERROR\n");
+            break;
         }
     }
     else {
@@ -271,7 +302,7 @@ void printRoots(Coeffs coefficient, SolverErrors errorCode, int accuracy)
     }
 }
 
-int isBeginnigMonomial(char symbol)
+int isBeginnigMonomial(int symbol)
 {
     if (isdigit(symbol) || symbol == 'x') {
         return 1;
@@ -281,10 +312,10 @@ int isBeginnigMonomial(char symbol)
     }
 }
 
-int isEndingMonomial(char symbol, char prevSymbol)
+int isEndingMonomial(int symbol, int prevSymbol)
 {
     if ( (symbol == '+' || symbol == '-' || symbol == '\n' || symbol == '=') &&
-        (prevSymbol != 'x' || prevSymbol != 'X' || prevSymbol != 'e' || prevSymbol != 'E') ) {
+        (tolower(prevSymbol) != 'x' || tolower(prevSymbol) != 'e') ) {
         return 1;
     }
     else {
@@ -295,7 +326,7 @@ int isEndingMonomial(char symbol, char prevSymbol)
 int getAccuracy()
 {
     int accuracy = 0;
-    char v = 0;
+    int v = 0;
 
     printf("Enter accuracy of output: ");
 
@@ -313,7 +344,7 @@ int getAccuracy()
     return accuracy;
 }
 
-void skipInput(char symbol)
+void skipInput(int symbol)
 {
     if (symbol != '\n') {
         while (getchar() != '\n') {
@@ -340,17 +371,18 @@ StatusDouble compareDouble(double number1, double number2)
     return LESS;
 }
 
-ResultOfTest test(Test test)
+ResultOfTest checkTest(TestData test)
 {
     Roots calculatedRoots = {};
     Roots realRoots = {test.x1, test.x2, test.numberOfRoots};
-    Coeffs coefficients = {test.a, test.b, test.c};
+    EquationData coefficients = {test.a, test.b, test.c};
 
     coefficients.type = getType(coefficients);
     solveEquation(coefficients, &calculatedRoots);
 
-    if ( calculatedRoots.x1 == realRoots.x1 && calculatedRoots.x2 == realRoots.x2 &&
-        calculatedRoots.numberOfRoots == realRoots.numberOfRoots ) {
+    if ( compareDouble(calculatedRoots.x1, realRoots.x1) == EQUALS &&
+         compareDouble(calculatedRoots.x2, realRoots.x2) == EQUALS &&
+         calculatedRoots.numberOfRoots == realRoots.numberOfRoots ) {
         return CORRECT;
     }
 

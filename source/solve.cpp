@@ -1,12 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <cassert>
 #include "read.h"
 #include "iosolver.h"
 #include "solve.h"
 
-void solveSquare(Coeffs coefficients, Roots * root)
+void solveSquare(EquationData coefficients, Roots * root)
 {
+    assert(root != NULL);
+
     double discriminant = (coefficients.b) * (coefficients.b) - 4 * (coefficients.a) * (coefficients.c);
 
     if ( compareDouble(discriminant, 0) == EQUALS ) {
@@ -27,8 +30,10 @@ void solveSquare(Coeffs coefficients, Roots * root)
     }
 }
 
-void solveSquareWithoutC(Coeffs coefficients, Roots * root)
+void solveSquareWithoutC(EquationData coefficients, Roots * root)
 {
+    assert(root != NULL);
+
     double anotherRoot = - (coefficients.b) / (coefficients.a);
 
     if ( compareDouble(anotherRoot, 0) == EQUALS ) {
@@ -49,14 +54,18 @@ void solveSquareWithoutC(Coeffs coefficients, Roots * root)
     }
 }
 
-void solveLinear(Coeffs coefficients, Roots * root)
+void solveLinear(EquationData coefficients, Roots * root)
 {
+    assert(root != NULL);
+
     root->x1 = - (coefficients.c) / (coefficients.b);
     root->numberOfRoots = ONE_ROOT;
 }
 
-void solveWithoutVariable(Coeffs coefficients, Roots * root)
+void solveWithoutVariable(EquationData coefficients, Roots * root)
 {
+    assert(root != NULL);
+
     if ( compareDouble(coefficients.c, 0) == EQUALS ) {
         root->numberOfRoots = INF_ROOTS;
     }
@@ -65,8 +74,10 @@ void solveWithoutVariable(Coeffs coefficients, Roots * root)
     }
 }
 
-void solveEquation(Coeffs coefficients, Roots * root)
+void solveEquation(EquationData coefficients, Roots * root)
 {
+    assert(root != NULL);
+
     switch(coefficients.type) {
     case SQUARE:
         solveSquare(coefficients, root);
@@ -79,6 +90,9 @@ void solveEquation(Coeffs coefficients, Roots * root)
         break;
     case WITHOUT_VARIABLE:
         solveWithoutVariable(coefficients, root);
+        break;
+    default:
+        printf("UNKNOWN ERROR\n");
         break;
     }
 }

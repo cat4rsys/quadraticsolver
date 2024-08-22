@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <cassert>
 #include "read.h"
 #include "iosolver.h"
 #include "solve.h"
