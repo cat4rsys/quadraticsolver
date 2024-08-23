@@ -1,14 +1,40 @@
-#include "iosolver.h"
+#ifndef H_SOLVE
+#define H_SOLVE
+#include <stdio.h>
 
-///------------------------------------------solveSquare------------------------------------------
-///
-///-----------------------------------------------------------------------------------------------
-void solveSquare(EquationData coefficient, Roots * root);
+enum NumberOfRoots
+{
+    ZERO_ROOTS,
+    ONE_ROOT,
+    TWO_ROOTS,
+    INF_ROOTS
+};
 
-void solveSquareWithoutC(EquationData coefficient, Roots * root);
+enum TypeOfEquation
+{
+    SQUARE,
+    SQUARE_WITHOUT_C,
+    LINEAR,
+    WITHOUT_VARIABLE
+};
 
-void solveLinear(EquationData coefficient, Roots * root);
+struct EquationData
+{
+    double a;
+    double b;
+    double c;
+    TypeOfEquation type;
+};
 
-void solveWithoutVariable(EquationData coefficient, Roots * root);
+typedef struct
+{
+    double x1;
+    double x2;
+    NumberOfRoots numberOfRoots;
+} Roots;
 
 void solveEquation(EquationData coefficient, Roots * root);
+
+TypeOfEquation getType(EquationData coefficient);
+
+#endif // H_SOLVE

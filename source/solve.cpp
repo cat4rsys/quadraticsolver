@@ -1,12 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <cassert>
 #include "read.h"
 #include "iosolver.h"
 #include "solve.h"
+#include "utilities.h"
 
-void solveSquare(EquationData coefficients, Roots * root)
+static void solveSquare(EquationData coefficient, Roots * root);
+
+static void solveSquareWithoutC(EquationData coefficient, Roots * root);
+
+static void solveLinear(EquationData coefficient, Roots * root);
+
+static void solveWithoutVariable(EquationData coefficient, Roots * root);
+
+static void solveSquare(EquationData coefficients, Roots * root)
 {
     customAssert(root != NULL, __FILE__, __LINE__);
 
@@ -30,7 +38,7 @@ void solveSquare(EquationData coefficients, Roots * root)
     }
 }
 
-void solveSquareWithoutC(EquationData coefficients, Roots * root)
+static void solveSquareWithoutC(EquationData coefficients, Roots * root)
 {
     customAssert(root != NULL, __FILE__, __LINE__);
 
@@ -54,7 +62,7 @@ void solveSquareWithoutC(EquationData coefficients, Roots * root)
     }
 }
 
-void solveLinear(EquationData coefficients, Roots * root)
+static void solveLinear(EquationData coefficients, Roots * root)
 {
     customAssert(root != NULL, __FILE__, __LINE__);
 
@@ -62,7 +70,7 @@ void solveLinear(EquationData coefficients, Roots * root)
     root->numberOfRoots = ONE_ROOT;
 }
 
-void solveWithoutVariable(EquationData coefficients, Roots * root)
+static void solveWithoutVariable(EquationData coefficients, Roots * root)
 {
     customAssert(root != NULL, __FILE__, __LINE__);
 
@@ -96,3 +104,20 @@ void solveEquation(EquationData coefficients, Roots * root)
         break;
     }
 }
+
+TypeOfEquation getType(EquationData coefficient)
+{
+    if ( compareDouble(coefficient.a, 0) == EQUALS ) {
+        if ( compareDouble(coefficient.b, 0) == EQUALS )
+            return WITHOUT_VARIABLE;
+        else
+            return LINEAR;
+    }
+    else {
+        if ( compareDouble(coefficient.c, 0) == EQUALS )
+            return SQUARE_WITHOUT_C;
+        else
+            return SQUARE;
+    }
+}
+

@@ -1,5 +1,6 @@
 #ifndef H_IOSOLVER
 #define H_IOSOLVER
+#include <solve.h>
 
 const double eps            = 1e-25;
 const int    normalAccuracy = 3;
@@ -20,27 +21,6 @@ enum PartsOfEquation
     RIGHT_PART
 };
 
-enum ResultOfTest
-{
-    CORRECT,
-    WRONG
-};
-
-enum NumberOfRoots
-{
-    ZERO_ROOTS,
-    ONE_ROOT,
-    TWO_ROOTS,
-    INF_ROOTS
-};
-
-enum StatusDouble
-{
-    GREATER,
-    EQUALS,
-    LESS
-};
-
 enum SolverErrors
 {
     NORMAL,
@@ -54,51 +34,6 @@ enum SolverErrors
     NUM_AFTER_X,
     TOO_MANY_OPERATIONS,
     NO_EQUAL
-};
-
-enum TypeOfEquation
-{
-    SQUARE,
-    SQUARE_WITHOUT_C,
-    LINEAR,
-    WITHOUT_VARIABLE
-};
-
-typedef struct
-{
-    double a;
-    double b;
-    double c;
-    TypeOfEquation type;
-} EquationData;
-
-typedef struct
-{
-    double x1;
-    double x2;
-    NumberOfRoots numberOfRoots;
-} Roots;
-
-typedef struct
-{
-    int numberOfThisTest;
-    double a;
-    double b;
-    double c;
-    double x1;
-    double x2;
-    NumberOfRoots numberOfRoots;
-} TestData;
-
-const TestData test_array[] = {
-    {1, 1,  4,     4,   -2,   0,   ONE_ROOT},
-    {2, 1,  0, -1.44, -1.2, 1.2,  TWO_ROOTS},
-    {3, 0,  3,     6,   -2,   0,   ONE_ROOT},
-    {4, 3,  6,     0,   -2,   0,  TWO_ROOTS},
-    {5, 3, -6,     0,    0,   2,  TWO_ROOTS},
-    {6, 0,  0,     1,    0,   0, ZERO_ROOTS},
-    {7, 0,  0,     0,    0,   0,  INF_ROOTS},
-    {8, 1,  3,    -4,   -4,   1,  TWO_ROOTS}
 };
 
 void helpMenu();
@@ -127,28 +62,18 @@ SolverErrors writeMonomial(int sign, double num, int power, EquationData * coeff
 /// @param [in] errorCode - code of error
 ///------------------------------------------------------------------------------------------------
 
-void printInputError(SolverErrors errorCode);
-
-void printBootError();
-
-TypeOfEquation getType(EquationData coefficient);
-
-void printRoots(Roots root, SolverErrors errorCode, int accuracy);
-
 int isBeginnigMonomial(int symbol);
 
 int isEndingMonomial(int symbol, int prevSymbol);
 
+void printInputError(SolverErrors errorCode);
+
+void printBootError();
+
+void printRoots(Roots root, SolverErrors errorCode, int accuracy);
+
 int getAccuracy();
 
-void skipInput(int symbol);
-
 void goodBye();
-
-StatusDouble compareDouble(double number1, double number2);
-
-ResultOfTest checkTest(TestData test);
-
-void customAssert(bool expression, const char * file, int line);
 
 #endif // H_IOSOLVER

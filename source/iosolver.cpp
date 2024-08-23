@@ -2,11 +2,12 @@
 #include <stdlib.h>
 #include <math.h>
 #include <ctype.h>
-#include <cassert>
 #include <cstring>
 #include "read.h"
 #include "iosolver.h"
 #include "solve.h"
+#include "testsys.h"
+#include "utilities.h"
 
 void helpMenu()
 {
@@ -97,7 +98,7 @@ void testMode()
 {
     int i = 0;
 
-    for(; i < 8; i++) {
+    for(; i < numberOfTests; i++) {
         if ( checkTest(test_array[i]) == WRONG ) {
             return;
         }
@@ -183,6 +184,28 @@ SolverErrors inputOfEquation(EquationData * coefficient)
     }
 }
 
+int isBeginnigMonomial(int symbol)
+{
+    if (isdigit(symbol) || symbol == 'x') {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+int isEndingMonomial(int symbol, int prevSymbol)
+{
+    if ( (symbol == '+' || symbol == '-' || symbol == '\n' || symbol == '=') &&
+        (tolower(prevSymbol) != 'x' || tolower(prevSymbol) != 'e') ) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+
 SolverErrors writeMonomial(int sign, double num, int power, EquationData * coefficient)
 {
     customAssert(coefficient != NULL, __FILE__, __LINE__);
@@ -251,22 +274,6 @@ void printBootError()
     printf("Try \"--help\" for help%s\n", STANDART);
 }
 
-TypeOfEquation getType(EquationData coefficient)
-{
-    if ( compareDouble(coefficient.a, 0) == EQUALS ) {
-        if ( compareDouble(coefficient.b, 0) == EQUALS )
-            return WITHOUT_VARIABLE;
-        else
-            return LINEAR;
-    }
-    else {
-        if ( compareDouble(coefficient.c, 0) == EQUALS )
-            return SQUARE_WITHOUT_C;
-        else
-            return SQUARE;
-    }
-}
-
 void printRoots(Roots root, SolverErrors errorCode, int accuracy)
 {
     if (errorCode == NORMAL) {
@@ -293,27 +300,6 @@ void printRoots(Roots root, SolverErrors errorCode, int accuracy)
     }
 }
 
-int isBeginnigMonomial(int symbol)
-{
-    if (isdigit(symbol) || symbol == 'x') {
-        return 1;
-    }
-    else {
-        return 0;
-    }
-}
-
-int isEndingMonomial(int symbol, int prevSymbol)
-{
-    if ( (symbol == '+' || symbol == '-' || symbol == '\n' || symbol == '=') &&
-        (tolower(prevSymbol) != 'x' || tolower(prevSymbol) != 'e') ) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
-}
-
 int getAccuracy()
 {
     int accuracy = 0;
@@ -335,63 +321,7 @@ int getAccuracy()
     return accuracy;
 }
 
-void skipInput(int symbol)
-{
-    if (symbol != '\n') {
-        while (getchar() != '\n') {
-            continue;
-        }
-    }
-}
-
 void goodBye()
 {
     printf("Thank you for using my program. Good bye!");
-}
-
-StatusDouble compareDouble(double number1, double number2)
-{
-    if ( fabs(number1 - number2) < eps ) {
-        return EQUALS;
-    }
-
-    if ( (number1 - number2) > eps ) {
-        return GREATER;
-    }
-
-    return LESS;
-}
-
-ResultOfTest checkTest(TestData test)
-{
-    Roots calculatedRoots = {};
-    Roots realRoots = {test.x1, test.x2, test.numberOfRoots};
-    EquationData coefficients = {test.a, test.b, test.c};
-
-    coefficients.type = getType(coefficients);
-    solveEquation(coefficients, &calculatedRoots);
-
-    if ( compareDouble(calculatedRoots.x1, realRoots.x1) == EQUALS &&
-         compareDouble(calculatedRoots.x2, realRoots.x2) == EQUALS &&
-         calculatedRoots.numberOfRoots == realRoots.numberOfRoots ) {
-        return CORRECT;
-    }
-
-    printf("ERROR at test №%d (a = %lg, b = %lg, c = %lg):\n", test.numberOfThisTest, coefficients.a, coefficients.b, coefficients.c);
-    printf("Expected: x1 = %lg, x2 = %lg, number of roots = %d\n", realRoots.x1, realRoots.x2, realRoots.numberOfRoots);
-    printf("Calculated: x1 = %lg, x2 = %lg, number of roots = %d\n",
-           calculatedRoots.x1, calculatedRoots.x2, calculatedRoots.numberOfRoots);
-
-    return WRONG;
-}
-
-void customAssert(bool expression, const char * file, int line)
-{
-    if ( expression ) {
-        return;
-    }
-    else {
-        printf("%sAssertion failed: file %s, line %d%s\n", RED, file, line, STANDART);
-        return;
-    }
 }

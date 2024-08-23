@@ -1,4 +1,7 @@
+#ifndef H_READ
+#define H_READ
 #include "iosolver.h"
+#include "solve.h"
 
 ///----------------------------------readExit-----------------------------------------------------
 /// \n Reads 'q\n', entered by user
@@ -107,3 +110,5 @@ SolverErrors readMonomial(int * symbol, int * prevSymbol, int * power, double * 
 ///-----------------------------------------------------------------------------------------------
 
 void readNext(int * symbol, int * prevSymbol);
+
+#endif // H_READ

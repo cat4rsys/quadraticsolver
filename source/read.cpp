@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <math.h>
 #include <ctype.h>
-#include <cassert>
 #include "read.h"
 #include "iosolver.h"
 #include "solve.h"
+#include "utilities.h"
 
 SolverErrors readExit()
 {
@@ -61,8 +61,8 @@ SolverErrors readNum(int * symbol, int * prevSymbol, double * num)
 
 SolverErrors readVar(int ifMult, int * power, int ifNum, double * num)
 {
-    assert(power != NULL);
-    assert(num != NULL);
+    customAssert(power != NULL, __FILE__, __LINE__);
+    customAssert(num != NULL, __FILE__, __LINE__);
 
     if ( !(ifNum) && (fabs(*num)) < eps ) {
         *num = 1.0;
