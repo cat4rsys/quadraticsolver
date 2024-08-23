@@ -9,6 +9,10 @@ const int    numberOfTests  = 8;
 // COLORS
 
 const char RED[] = "\033[3;31m";
+const char CYAN[] = "\033[1;36m";
+const char GREEN[] = "\033[3;32m";
+const char PURPLE[] = "\033[3;35m";
+const char YELLOW[] = "\033[3;33m";
 const char STANDART[] = "\033[0m";
 
 enum PartsOfEquation
@@ -106,11 +110,13 @@ const TestData test_array[] = {
     {8, 1,  3,    -4,   -4,   1,  TWO_ROOTS}
 };
 
-void mainMenu();
+void helpMenu();
 
-ModesOfWork pickAction();
+void pickMode(char * arg);
 
-void doAction(ModesOfWork mode);
+/*ModesOfWork pickAction();
+
+void doAction(ModesOfWork mode);*/
 
 void simpleMode();
 
@@ -136,6 +142,8 @@ SolverErrors writeMonomial(int sign, double num, int power, EquationData * coeff
 
 void printInputError(SolverErrors errorCode);
 
+void printBootError();
+
 TypeOfEquation getType(EquationData coefficient);
 
 void printRoots(Roots root, SolverErrors errorCode, int accuracy);
@@ -153,5 +161,7 @@ void goodBye();
 StatusDouble compareDouble(double number1, double number2);
 
 ResultOfTest checkTest(TestData test);
+
+void customAssert(bool expression, const char * file, int line);
 
 #endif // H_IOSOLVER

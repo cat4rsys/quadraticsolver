@@ -13,16 +13,16 @@ $(OUTPUT): $(OBJ)
 	$(CC) $(OBJ) -o $@
 
 build\iosolver.o:
-	$(CC) $(CFLAGS) -I $(INCLUDES) -c source\iosolver.cpp -o $@
+	@$(CC) $(CFLAGS) -I $(INCLUDES) -c source\iosolver.cpp -o $@
 
 build\main.o:
-	$(CC) $(CFLAGS) -I $(INCLUDES) -c source\main.cpp -o $@
+	@$(CC) $(CFLAGS) -I $(INCLUDES) -c source\main.cpp -o $@
 
 build\read.o:
-	$(CC) $(CFLAGS) -I $(INCLUDES) -c source\read.cpp -o $@
+	@$(CC) $(CFLAGS) -I $(INCLUDES) -c source\read.cpp -o $@
 
 build\solve.o:
-	$(CC) $(CFLAGS) -I $(INCLUDES) -c source\solve.cpp -o $@
+	@$(CC) $(CFLAGS) -I $(INCLUDES) -c source\solve.cpp -o $@
 
 clean:
 	del build\*.o $(OUTPUT)

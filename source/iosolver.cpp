@@ -3,62 +3,48 @@
 #include <math.h>
 #include <ctype.h>
 #include <cassert>
+#include <cstring>
 #include "read.h"
 #include "iosolver.h"
 #include "solve.h"
 
-void mainMenu()
+void helpMenu()
 {
-    printf("Quadratic equation solver\n");
-    printf("Program has two modes of work:\n");
+    printf("%sQuadratic equation solver%s\n\n", CYAN, STANDART);
+    printf("Program has three modes of work:\n");
     printf("Simple mode - mode with minimum output and opportunity to enter equations endlessly.\n");
     printf("Detail mode - mode, that instructing you, but you can enter only one equation.\n");
     printf("Test mode - mode allowing to test how program solving equations. For developers.\n");
     printf("(For first use recommended to use Detail mode)\n");
-    printf("Choose mode:\n");
-    printf("a - Simple mode\n");
-    printf("b - Detail mode\n");
-    printf("t - Test mode\n");
-    printf("Or enter \"q\" for quit\n");
+    printf("\nThese are common Quadratic Solver commands:\n");
+    printf("    --help - description of program and commands.\n\n");
+    printf("    simple - turning on simple mode.\n");
+    printf("    detail - turning on detail mode.\n");
+    printf("    test   - turning on test mode.\n\n");
 }
 
-ModesOfWork pickAction()
+void pickMode(char * arg)
 {
-    int action = getchar();
-    int temp = 0;
-
-    while ( (temp = getchar()) != '\n' || (action != 'b' && action != 'a' && action != 'q' && action != 't') ) {
-        printf("Wrong input. Try again:\n");
-        skipInput(temp);
-        action = getchar();
+    if ( !strcmp(arg, "--help") ) {
+        helpMenu();
     }
-
-    return readMode(action);
-}
-
-void doAction(ModesOfWork mode)
-{
-    switch(mode) {
-    case TEST:
-        testMode();
-        break;
-    case SIMPLE:
+    else if ( !strcmp(arg, "simple") ) {
         simpleMode();
-        break;
-    case DETAIL:
+    }
+    else if ( !strcmp(arg, "detail") ) {
         detailMode();
-        break;
-    case EXIT:
-        break;
-    default:
-        printf("UNKNOWN ERROR\n");
-        return;
+    }
+    else if ( !strcmp(arg, "test") ) {
+        testMode();
+    }
+    else {
+        printBootError();
     }
 }
 
 void simpleMode()
 {
-    printf("Enter your equations. To exit to the menu enter \"q\".\n");
+    printf("Enter your equations. To exit enter \"q\".\n");
 
     SolverErrors errorCode = NORMAL;
 
@@ -74,6 +60,8 @@ void simpleMode()
 
         printRoots(roots, errorCode, normalAccuracy);
     }
+
+    goodBye();
 }
 
 void detailMode()
@@ -81,7 +69,7 @@ void detailMode()
     SolverErrors errorCode = NORMAL;
     EquationData coefficients = {0, 0, 0};
 
-    printf("Enter your equation. To exit to the menu enter \"q\".\n");
+    printf("Enter your equation. To exit enter \"q\".\n");
     printf("Program can't solve equations with brackets.\n");
     printf("Program ignores blanks.\n");
     printf("For writing square of x you can use \"xx\"\n");
@@ -100,6 +88,8 @@ void detailMode()
 
     printf("Enter anything for exit to the menu\n");
     skipInput('0');
+
+    goodBye();
 }
 
 void testMode()
@@ -247,12 +237,18 @@ void printInputError(SolverErrors errorCode)
         printf("%sEquation inputed correct%s\n", RED, STANDART);
         break;
     case RETURN_IN_MAIN_MENU:
-        printf("%sReturning in main menu%s\n", RED, STANDART);
+        printf("%sExiting%s\n", RED, STANDART);
         break;
     default:
         printf("%sUNKNOWN ERROR%s\n", RED, STANDART);
         break;
     }
+}
+
+void printBootError()
+{
+    printf("%sERROR OF BOOT\n", RED);
+    printf("Try \"--help\" for help%s\n", STANDART);
 }
 
 TypeOfEquation getType(EquationData coefficient)
@@ -276,19 +272,19 @@ void printRoots(Roots root, SolverErrors errorCode, int accuracy)
     if (errorCode == NORMAL) {
         switch(root.numberOfRoots) {
         case INF_ROOTS:
-            printf("The equation has infinite number of roots.\n");
+            printf("%sANSWER:%s The equation has infinite number of roots.\n", PURPLE, STANDART);
             break;
         case ZERO_ROOTS:
-            printf("The equation has NO roots!\n");
+            printf("%sANSWER:%s The equation has NO roots!\n", RED, STANDART);
             break;
         case ONE_ROOT:
-            printf("x = %.*e.\n", accuracy, root.x1);
+            printf("%sANSWER:%s x = %.*e.\n", YELLOW, STANDART, accuracy, root.x1);
             break;
         case TWO_ROOTS:
-            printf("x1 = %.*e, x2 = %.*e\n", accuracy, root.x1, accuracy, root.x2);
+            printf("%sANSWER:%s x1 = %.*e, x2 = %.*e\n", GREEN, STANDART, accuracy, root.x1, accuracy, root.x2);
             break;
         default:
-            printf("UNKNOWN ERROR\n");
+            printf("%sUNKNOWN ERROR%s\n", RED, STANDART);
             break;
         }
     }
@@ -390,4 +386,15 @@ ResultOfTest checkTest(TestData test)
     skipInput('0');
 
     return WRONG;
+}
+
+void customAssert(bool expression, const char * file, int line)
+{
+    if ( expression ) {
+        return;
+    }
+    else {
+        printf("%sAssertion failed: file %s, line %d%s\n", RED, file, line, STANDART);
+        return;
+    }
 }
