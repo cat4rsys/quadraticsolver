@@ -27,14 +27,6 @@ enum ResultOfTest
     WRONG
 };
 
-enum ModesOfWork
-{
-    SIMPLE,
-    DETAIL,
-    TEST,
-    EXIT
-};
-
 enum NumberOfRoots
 {
     ZERO_ROOTS,
@@ -113,10 +105,6 @@ const TestData test_array[] = {
 void helpMenu();
 
 void pickMode(char * arg);
-
-/*ModesOfWork pickAction();
-
-void doAction(ModesOfWork mode);*/
 
 void simpleMode();
 

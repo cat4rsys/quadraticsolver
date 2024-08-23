@@ -11,7 +11,8 @@
 void helpMenu()
 {
     printf("%sQuadratic equation solver%s\n\n", CYAN, STANDART);
-    printf("Program has three modes of work:\n");
+    printf("Program has three modes of work:\n\n");
+    printf("DESCRIPTION:\n");
     printf("Simple mode - mode with minimum output and opportunity to enter equations endlessly.\n");
     printf("Detail mode - mode, that instructing you, but you can enter only one equation.\n");
     printf("Test mode - mode allowing to test how program solving equations. For developers.\n");
@@ -102,8 +103,7 @@ void testMode()
         }
     }
 
-    printf("All tests are correct. Enter anything for exit to the menu\n");
-    skipInput('0');
+    printf("All tests are correct\n");
 }
 
 SolverErrors inputOfEquation(EquationData * coefficient)
@@ -272,16 +272,16 @@ void printRoots(Roots root, SolverErrors errorCode, int accuracy)
     if (errorCode == NORMAL) {
         switch(root.numberOfRoots) {
         case INF_ROOTS:
-            printf("%sANSWER:%s The equation has infinite number of roots.\n", PURPLE, STANDART);
+            printf("%sANSWER: The equation has infinite number of roots.%s\n", PURPLE, STANDART);
             break;
         case ZERO_ROOTS:
-            printf("%sANSWER:%s The equation has NO roots!\n", RED, STANDART);
+            printf("%sANSWER: The equation has NO roots!%s\n", RED, STANDART);
             break;
         case ONE_ROOT:
-            printf("%sANSWER:%s x = %.*e.\n", YELLOW, STANDART, accuracy, root.x1);
+            printf("%sANSWER: x = %.*e.%s\n", YELLOW, accuracy, root.x1, STANDART);
             break;
         case TWO_ROOTS:
-            printf("%sANSWER:%s x1 = %.*e, x2 = %.*e\n", GREEN, STANDART, accuracy, root.x1, accuracy, root.x2);
+            printf("%sANSWER: x1 = %.*e, x2 = %.*e%s\n", GREEN, accuracy, root.x1, accuracy, root.x2, STANDART);
             break;
         default:
             printf("%sUNKNOWN ERROR%s\n", RED, STANDART);

@@ -250,21 +250,3 @@ void readNext(int * symbol, int * prevSymbol)
     *prevSymbol = *symbol;
     *symbol = getchar();
 }
-
-ModesOfWork readMode(int symbol)
-{
-    switch(symbol){
-    case 't':
-        return TEST;
-    case 'a':
-        return SIMPLE;
-    case 'b':
-        return DETAIL;
-    case 'q':
-        return EXIT;
-    default:
-        printf("UNKNOWN ERROR\n");
-        break;
-    }
-    return EXIT;
-}

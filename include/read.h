@@ -107,5 +107,3 @@ SolverErrors readMonomial(int * symbol, int * prevSymbol, int * power, double * 
 ///-----------------------------------------------------------------------------------------------
 
 void readNext(int * symbol, int * prevSymbol);
-
-ModesOfWork readMode(int symbol);

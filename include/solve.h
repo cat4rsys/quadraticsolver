@@ -1,5 +1,8 @@
 #include "iosolver.h"
 
+///------------------------------------------solveSquare------------------------------------------
+///
+///-----------------------------------------------------------------------------------------------
 void solveSquare(EquationData coefficient, Roots * root);
 
 void solveSquareWithoutC(EquationData coefficient, Roots * root);
