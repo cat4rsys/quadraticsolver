@@ -6,6 +6,11 @@ const int    normalAccuracy = 3;
 const int    infRoots       = 100;
 const int    numberOfTests  = 8;
 
+// COLORS
+
+const char RED[] = "\033[3;31m";
+const char STANDART[] = "\033[0m";
+
 enum PartsOfEquation
 {
     LEFT_PART,
@@ -91,14 +96,14 @@ typedef struct
 } TestData;
 
 const TestData test_array[] = {
-    {1, 1, 4, 4, -2, 0, ONE_ROOT},
-    {2, 1, 0, -1.44, -1.2, 1.2, TWO_ROOTS},
-    {3, 0, 3, 6, -2, 0, ONE_ROOT},
-    {4, 3, 6, 0, -2, 0, TWO_ROOTS},
-    {5, 3, -6, 0, 0, 2, TWO_ROOTS},
-    {6, 0, 0, 1, 0, 0, ZERO_ROOTS},
-    {7, 0, 0, 0, 0, 0, INF_ROOTS},
-    {8, 1, 3, -4, -4, 1, TWO_ROOTS}
+    {1, 1,  4,     4,   -2,   0,   ONE_ROOT},
+    {2, 1,  0, -1.44, -1.2, 1.2,  TWO_ROOTS},
+    {3, 0,  3,     6,   -2,   0,   ONE_ROOT},
+    {4, 3,  6,     0,   -2,   0,  TWO_ROOTS},
+    {5, 3, -6,     0,    0,   2,  TWO_ROOTS},
+    {6, 0,  0,     1,    0,   0, ZERO_ROOTS},
+    {7, 0,  0,     0,    0,   0,  INF_ROOTS},
+    {8, 1,  3,    -4,   -4,   1,  TWO_ROOTS}
 };
 
 void mainMenu();

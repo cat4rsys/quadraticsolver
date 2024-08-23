@@ -12,7 +12,8 @@ void mainMenu()
     printf("Quadratic equation solver\n");
     printf("Program has two modes of work:\n");
     printf("Simple mode - mode with minimum output and opportunity to enter equations endlessly.\n");
-    printf("Detail mode - mode, that instructing you, but you can enter only one equation\n");
+    printf("Detail mode - mode, that instructing you, but you can enter only one equation.\n");
+    printf("Test mode - mode allowing to test how program solving equations. For developers.\n");
     printf("(For first use recommended to use Detail mode)\n");
     printf("Choose mode:\n");
     printf("a - Simple mode\n");
@@ -216,40 +217,40 @@ void printInputError(SolverErrors errorCode)
 {
     switch (errorCode) {
     case UNKNOWN_SYMBOL:
-        printf("ERROR: Unknown symbol in input\n");
+        printf("%sERROR: Unknown symbol in input%s\n", RED, STANDART);
         break;
     case TWO_OR_MORE_EQUALS:
-        printf("ERROR: Two or more \'=\' symbols\n");
+        printf("%sERROR: Two or more \'=\' symbols%s\n", RED, STANDART);
         break;
     case INCORRECT_POWER:
-        printf("ERROR: Power of your equation is more then two or contains monomials with negative power\n");
+        printf("%sERROR: Power of your equation is more then two or contains monomials with negative power%s\n", RED, STANDART);
         break;
     case TWO_OR_MORE_FRACTIONAL:
-        printf("ERROR: Two or more \'.\' symbols in one number\n");
+        printf("%sERROR: Two or more \'.\' symbols in one number%s\n", RED, STANDART);
         break;
     case FLOAT_EXPONENTIAL:
-        printf("ERROR: Exponential part can be only integer\n");
+        printf("%sERROR: Exponential part can be only integer%s\n", RED, STANDART);
         break;
     case TWO_OR_MORE_EXPONENTIAL:
-        printf("ERROR: In one number can be only one exponential part\n");
+        printf("%sERROR: In one number can be only one exponential part\n%s", RED, STANDART);
         break;
     case NUM_AFTER_X:
-        printf("ERROR: After \"x\" expected *, /, +, -\n");
+        printf("%sERROR: After \"x\" expected *, /, +, -\n%s", RED, STANDART);
         break;
     case TOO_MANY_OPERATIONS:
-        printf("ERROR: You can't write symbol of operation after symbol of operation.\n");
+        printf("%sERROR: You can't write symbol of operation after symbol of operation.%s\n", RED, STANDART);
         break;
     case NO_EQUAL:
-        printf("ERROR: Your equation has not \'=\' symbol.\n");
+        printf("%sERROR: Your equation has not \'=\' symbol.%s\n", RED, STANDART);
         break;
     case NORMAL:
-        printf("Equation inputed correct\n");
+        printf("%sEquation inputed correct%s\n", RED, STANDART);
         break;
     case RETURN_IN_MAIN_MENU:
-        printf("Returning in main menu\n");
+        printf("%sReturning in main menu%s\n", RED, STANDART);
         break;
     default:
-        printf("UNKNOWN ERROR\n");
+        printf("%sUNKNOWN ERROR%s\n", RED, STANDART);
         break;
     }
 }
@@ -270,15 +271,9 @@ TypeOfEquation getType(EquationData coefficient)
     }
 }
 
-// TODO naming
 void printRoots(Roots root, SolverErrors errorCode, int accuracy)
 {
     if (errorCode == NORMAL) {
-        /*Roots root = {};
-
-        coefficient.type = getType(coefficient);
-        solveEquation(coefficient, &root);
-*/
         switch(root.numberOfRoots) {
         case INF_ROOTS:
             printf("The equation has infinite number of roots.\n");

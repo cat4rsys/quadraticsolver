@@ -26,8 +26,6 @@ SolverErrors readNum(int * symbol, int * prevSymbol, double * num)
     assert(num != NULL);
 
     if ( *prevSymbol == 'x' || *prevSymbol == 'X' ) {
-        skipInput(*symbol);
-
         return NUM_AFTER_X;
     }
 
@@ -106,6 +104,10 @@ SolverErrors readE(int * symbol, int * prevSymbol, double * num)
         readNext(symbol, prevSymbol);
     }
 
+    if ( *symbol == '.' or *symbol == ',' ) {
+        return FLOAT_EXPONENTIAL;
+    }
+
     if ( tolower(*symbol) == 'e' ) {
         return TWO_OR_MORE_EXPONENTIAL;
     }
@@ -156,13 +158,13 @@ int readSign(int symbol, PartsOfEquation part)
     if ( symbol == '+' && part == LEFT_PART ) {
         return +1;
     }
-    if ( symbol == '-' && part == RIGHT_PART ) {
+    else if ( symbol == '-' && part == RIGHT_PART ) {
         return +1;
     }
-    if ( symbol == '+' && part == RIGHT_PART ) {
+    else if ( symbol == '+' && part == RIGHT_PART ) {
         return -1;
     }
-    if ( symbol == '-' && part == LEFT_PART ) {
+    else if ( symbol == '-' && part == LEFT_PART ) {
         return -1;
     }
 
@@ -206,8 +208,9 @@ SolverErrors readMonomial(int * symbol, int * prevSymbol, int * power, double * 
         }
 
         else if ( isdigit(*symbol )) {
-            if ( (errorCode = readNum(symbol, prevSymbol, &num)) != NORMAL )
+            if ( (errorCode = readNum(symbol, prevSymbol, &num)) != NORMAL ) {
                 return errorCode;
+            }
 
             ifNum = 1;
         }
