@@ -21,9 +21,9 @@ SolverErrors readExit()
 
 SolverErrors readNum(int * symbol, int * prevSymbol, double * num)
 {
-    assert(symbol != NULL);
-    assert(prevSymbol != NULL);
-    assert(num != NULL);
+    customAssert(symbol != NULL, __FILE__, __LINE__);
+    customAssert(prevSymbol != NULL, __FILE__, __LINE__);
+    customAssert(num != NULL, __FILE__, __LINE__);
 
     if ( *prevSymbol == 'x' || *prevSymbol == 'X' ) {
         return NUM_AFTER_X;
@@ -80,9 +80,9 @@ SolverErrors readVar(int ifMult, int * power, int ifNum, double * num)
 
 SolverErrors readE(int * symbol, int * prevSymbol, double * num)
 {
-    assert(symbol != NULL);
-    assert(prevSymbol != NULL);
-    assert(num != NULL);
+    customAssert(symbol != NULL, __FILE__, __LINE__);
+    customAssert(prevSymbol != NULL, __FILE__, __LINE__);
+    customAssert(num != NULL, __FILE__, __LINE__);
 
     int signE = +1;
     int numInE = 0;
@@ -128,11 +128,11 @@ SolverErrors readE(int * symbol, int * prevSymbol, double * num)
 
 SolverErrors readMultiplication(int * symbol, int * prevSymbol, double * multiplicatedNum, double * num, int * ifMult)
 {
-    assert(symbol != NULL);
-    assert(prevSymbol != NULL);
-    assert(multiplicatedNum != NULL);
-    assert(num != NULL);
-    assert(ifMult != NULL);
+    customAssert(symbol != NULL, __FILE__, __LINE__);
+    customAssert(prevSymbol != NULL, __FILE__, __LINE__);
+    customAssert(multiplicatedNum != NULL, __FILE__, __LINE__);
+    customAssert(num != NULL, __FILE__, __LINE__);
+    customAssert(ifMult != NULL, __FILE__, __LINE__);
 
     if ( *prevSymbol == '+' || *prevSymbol == '-' || *prevSymbol == '*' || *prevSymbol == '/' ) {
         return TOO_MANY_OPERATIONS;
@@ -173,10 +173,10 @@ int readSign(int symbol, PartsOfEquation part)
 
 SolverErrors readMonomial(int * symbol, int * prevSymbol, int * power, double * number)
 {
-    assert(symbol != NULL);
-    assert(prevSymbol != NULL);
-    assert(power != NULL);
-    assert(number != NULL);
+    customAssert(symbol != NULL, __FILE__, __LINE__);
+    customAssert(prevSymbol != NULL, __FILE__, __LINE__);
+    customAssert(power != NULL, __FILE__, __LINE__);
+    customAssert(number != NULL, __FILE__, __LINE__);
 
     SolverErrors errorCode = NORMAL;
     int ifNum = 0;
@@ -244,8 +244,8 @@ SolverErrors readMonomial(int * symbol, int * prevSymbol, int * power, double * 
 
 void readNext(int * symbol, int * prevSymbol)
 {
-    assert(symbol != NULL);
-    assert(prevSymbol != NULL);
+    customAssert(symbol != NULL, __FILE__, __LINE__);
+    customAssert(prevSymbol != NULL, __FILE__, __LINE__);
 
     *prevSymbol = *symbol;
     *symbol = getchar();

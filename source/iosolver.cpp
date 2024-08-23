@@ -108,7 +108,7 @@ void testMode()
 
 SolverErrors inputOfEquation(EquationData * coefficient)
 {
-    assert(coefficient != NULL);
+    customAssert(coefficient != NULL, __FILE__, __LINE__);
 
     PartsOfEquation part = LEFT_PART;
     SolverErrors errorCode = NORMAL;
@@ -185,7 +185,7 @@ SolverErrors inputOfEquation(EquationData * coefficient)
 
 SolverErrors writeMonomial(int sign, double num, int power, EquationData * coefficient)
 {
-    assert(coefficient != NULL);
+    customAssert(coefficient != NULL, __FILE__, __LINE__);
 
     switch (power) {
     case 2:
