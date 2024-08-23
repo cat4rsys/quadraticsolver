@@ -3,7 +3,6 @@
 
 const double eps            = 1e-25;
 const int    normalAccuracy = 3;
-const int    infRoots       = 100;
 const int    numberOfTests  = 8;
 
 // COLORS

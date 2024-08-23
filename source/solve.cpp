@@ -42,14 +42,14 @@ void solveSquareWithoutC(EquationData coefficients, Roots * root)
     }
 
     else if ( compareDouble(anotherRoot, 0) == LESS ) {
-        root->x1 = 0;
-        root->x2 = anotherRoot;
+        root->x2 = 0;
+        root->x1 = anotherRoot;
         root->numberOfRoots = TWO_ROOTS;
     }
 
     else if ( compareDouble(anotherRoot, 0) == GREATER ) {
-        root->x2 = 0;
-        root->x1 = anotherRoot;
+        root->x1 = 0;
+        root->x2 = anotherRoot;
         root->numberOfRoots = TWO_ROOTS;
     }
 }

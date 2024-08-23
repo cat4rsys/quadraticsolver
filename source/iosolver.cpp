@@ -97,7 +97,7 @@ void testMode()
 {
     int i = 0;
 
-    for(; i == numberOfTests - 1; i++) {
+    for(; i < 8; i++) {
         if ( checkTest(test_array[i]) == WRONG ) {
             return;
         }
@@ -381,9 +381,6 @@ ResultOfTest checkTest(TestData test)
     printf("Expected: x1 = %lg, x2 = %lg, number of roots = %d\n", realRoots.x1, realRoots.x2, realRoots.numberOfRoots);
     printf("Calculated: x1 = %lg, x2 = %lg, number of roots = %d\n",
            calculatedRoots.x1, calculatedRoots.x2, calculatedRoots.numberOfRoots);
-
-    printf("Enter anything for exit to the menu\n");
-    skipInput('0');
 
     return WRONG;
 }
