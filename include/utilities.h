@@ -1,6 +1,8 @@
 #ifndef H_UTILITIES
 #define H_UTILITIES
 
+const double eps            = 1e-25; /**< error of double */
+
 /**
  * \brief Result of comparing two doubles
  */

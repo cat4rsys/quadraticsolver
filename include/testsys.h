@@ -1,6 +1,8 @@
 #ifndef H_TESTSYS
 #define H_TESTSYS
 
+const int    numberOfTests  = 8;                 /**< Number of all tests */
+
 /**
  * \brief Possible cases of test
  */
@@ -24,7 +26,7 @@ typedef struct
     NumberOfRoots numberOfRoots;                 /**< Expected number of roots */
 } TestData;
 
-const TestData test_array[] = {
+const TestData test_array[] = {                  /**< All tests */
     {1, 1,  4,     4,   -2,   0,   ONE_ROOT},
     {2, 1,  0, -1.44, -1.2, 1.2,  TWO_ROOTS},
     {3, 0,  3,     6,   -2,   0,   ONE_ROOT},

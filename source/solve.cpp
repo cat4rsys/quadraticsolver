@@ -6,12 +6,36 @@
 #include "solve.h"
 #include "utilities.h"
 
+/**
+ * \brief Solves square equation
+ *
+ * \param[in]  coeffitient - struct with coefficients and type of equation
+ * \param[out] root        - struct with roots and number of roots
+ */
 static void solveSquare(EquationData coefficient, Roots * root);
 
+/**
+ * \brief Solves square equation without c-coeffitient
+ *
+ * \param[in]  coeffitient - struct with coefficients and type of equation
+ * \param[out] root        - struct with roots and number of roots
+ */
 static void solveSquareWithoutC(EquationData coefficient, Roots * root);
 
+/**
+ * \brief Solves linear equation
+ *
+ * \param[in]  coeffitient - struct with coefficients and type of equation
+ * \param[out] root        - struct with roots and number of roots
+ */
 static void solveLinear(EquationData coefficient, Roots * root);
 
+/**
+ * \brief Solves equation without variables
+ *
+ * \param[in]  coeffitient - struct with coefficients and type of equation
+ * \param[out] root        - struct with roots and number of roots
+ */
 static void solveWithoutVariable(EquationData coefficient, Roots * root);
 
 static void solveSquare(EquationData coefficients, Roots * root)
