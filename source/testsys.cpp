@@ -25,3 +25,4 @@ ResultOfTest checkTest(TestData test)
 
     return WRONG;
 }
+
