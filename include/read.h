@@ -70,7 +70,7 @@ SolverErrors readVar(int ifMult, int * power, int ifNum, double * num);
 SolverErrors readMultiplication(int * symbol, int * prevSymbol, double * multiplicatedNum, double * num, int * ifMult);
 
 /**
- * \brief + or - between monomials
+ * \brief Reads "+" or "-" between monomials
  *
  * \param symbol           - symbol, that was enterred between two monomials
  * \param part             - left or right part of equation?
