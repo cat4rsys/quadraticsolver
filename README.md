@@ -11,7 +11,11 @@ In my program you can enter full equation for solve it. You can enter float numb
 ### Installing
 
 * Run make file by writing "make" in folder with program.
-* After that you can write .\boot.exe --help for introduction for my program.
+* For introduction for my programyou can write:
+
+~~~
+.\boot.exe --help
+~~~
 
 ### Modes of work
 
@@ -20,6 +24,24 @@ In my program you can enter full equation for solve it. You can enter float numb
 * Test mode - mode allowing to test how program solving equations. For developers.
 
 For first use I recommend to try detail mode
+
+For boot simple mode you can write:
+
+~~~
+.\boot.exe simple
+~~~
+
+For boot detail mode you can write:
+
+~~~
+.\boot.exe detail
+~~~
+
+For boot test mode you can write:
+
+~~~
+.\boot.exe test
+~~~
 
 ### Author
 
