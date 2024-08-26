@@ -33,4 +33,8 @@ Contact info:
 
 * 1.0
   * Added test system
-  * Added input of equa
+  * Added input of equation
+  * Added solve system
+
+## Example of work
+

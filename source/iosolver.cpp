@@ -3,6 +3,7 @@
 #include <math.h>
 #include <ctype.h>
 #include <cstring>
+#include <windows.h>
 #include "read.h"
 #include "iosolver.h"
 #include "solve.h"
@@ -11,7 +12,9 @@
 
 void helpMenu()
 {
-    printf("%sQuadratic equation solver%s\n\n", CYAN, STANDART);
+    setColor(CYAN);
+    printf("Quadratic equation solver\n\n");
+    setColor(STANDART);
     printf("Program has three modes of work:\n\n");
     printf("DESCRIPTION:\n");
     printf("Simple mode - mode with minimum output and opportunity to enter equations endlessly.\n");
@@ -228,50 +231,54 @@ SolverErrors writeMonomial(int sign, double num, int power, EquationData * coeff
 
 void printInputError(SolverErrors errorCode)
 {
+    setColor(RED);
     switch (errorCode) {
     case UNKNOWN_SYMBOL:
-        printf("%sERROR: Unknown symbol in input%s\n", RED, STANDART);
+        printf("ERROR: Unknown symbol in input\n");
         break;
     case TWO_OR_MORE_EQUALS:
-        printf("%sERROR: Two or more \'=\' symbols%s\n", RED, STANDART);
+        printf("ERROR: Two or more \'=\' symbols\n");
         break;
     case INCORRECT_POWER:
-        printf("%sERROR: Power of your equation is more then two or contains monomials with negative power%s\n", RED, STANDART);
+        printf("ERROR: Power of your equation is more then two or contains monomials with negative power\n");
         break;
     case TWO_OR_MORE_FRACTIONAL:
-        printf("%sERROR: Two or more \'.\' symbols in one number%s\n", RED, STANDART);
+        printf("ERROR: Two or more \'.\' symbols in one number\n");
         break;
     case FLOAT_EXPONENTIAL:
-        printf("%sERROR: Exponential part can be only integer%s\n", RED, STANDART);
+        printf("ERROR: Exponential part can be only integer\n");
         break;
     case TWO_OR_MORE_EXPONENTIAL:
-        printf("%sERROR: In one number can be only one exponential part\n%s", RED, STANDART);
+        printf("ERROR: In one number can be only one exponential part\n");
         break;
     case NUM_AFTER_X:
-        printf("%sERROR: After \"x\" expected *, /, +, -\n%s", RED, STANDART);
+        printf("ERROR: After \"x\" expected *, /, +, -\n");
         break;
     case TOO_MANY_OPERATIONS:
-        printf("%sERROR: You can't write symbol of operation after symbol of operation.%s\n", RED, STANDART);
+        printf("ERROR: You can't write symbol of operation after symbol of operation.\n");
         break;
     case NO_EQUAL:
-        printf("%sERROR: Your equation has not \'=\' symbol.%s\n", RED, STANDART);
+        printf("ERROR: Your equation has not \'=\' symbol.\n");
         break;
     case NORMAL:
-        printf("%sEquation inputed correct%s\n", RED, STANDART);
+        printf("Equation inputed correct\n");
         break;
     case RETURN_IN_MAIN_MENU:
-        printf("%sExiting%s\n", RED, STANDART);
+        printf("Exiting\n");
         break;
     default:
-        printf("%sUNKNOWN ERROR%s\n", RED, STANDART);
+        printf("UNKNOWN ERROR\n");
         break;
     }
+    setColor(STANDART);
 }
 
 void printBootError()
 {
-    printf("%sERROR OF BOOT\n", RED);
-    printf("Try \"--help\" for help%s\n", STANDART);
+    setColor(RED);
+    printf("ERROR OF BOOT\n");
+    printf("Try \"--help\" for help\n");
+    setColor(STANDART)
 }
 
 void printRoots(Roots root, SolverErrors errorCode, int accuracy)
@@ -279,21 +286,28 @@ void printRoots(Roots root, SolverErrors errorCode, int accuracy)
     if (errorCode == NORMAL) {
         switch(root.numberOfRoots) {
         case INF_ROOTS:
-            printf("%sANSWER: The equation has infinite number of roots.%s\n", PURPLE, STANDART);
+            setColor(PURPLE);
+            printf("ANSWER: The equation has infinite number of roots.\n");
             break;
         case ZERO_ROOTS:
-            printf("%sANSWER: The equation has NO roots!%s\n", RED, STANDART);
+            setColor(RED);
+            printf("ANSWER: The equation has NO roots!\n");
             break;
         case ONE_ROOT:
-            printf("%sANSWER: x = %.*e.%s\n", YELLOW, accuracy, root.x1, STANDART);
+            setColor(YELLOW);
+            printf("ANSWER: x = %.*e.\n", accuracy, root.x1);
             break;
         case TWO_ROOTS:
-            printf("%sANSWER: x1 = %.*e, x2 = %.*e%s\n", GREEN, accuracy, root.x1, accuracy, root.x2, STANDART);
+            setColor(GREEN);
+            printf("ANSWER: x1 = %.*e, x2 = %.*e\n", accuracy, root.x1, accuracy, root.x2);
             break;
         default:
-            printf("%sUNKNOWN ERROR%s\n", RED, STANDART);
+            setColor(RED);
+            printf("UNKNOWN ERROR\n");
             break;
         }
+
+        setColor(STANDART);
     }
     else {
         printInputError(errorCode);

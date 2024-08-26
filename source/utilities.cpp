@@ -18,7 +18,9 @@ void customAssert(bool expression, const char * file, int line)
         return;
     }
     else {
-        printf("%sAssertion failed: file %s, line %d%s\n", RED, file, line, STANDART);
+        setColor(RED);
+        printf("Assertion failed: file %s, line %d\n", file, line);
+        setColor(STANDART);
         return;
     }
 }
