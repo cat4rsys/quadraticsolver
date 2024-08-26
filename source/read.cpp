@@ -21,9 +21,9 @@ SolverErrors readExit()
 
 SolverErrors readNum(int * symbol, int * prevSymbol, double * num)
 {
-    customAssert(symbol != NULL, __FILE__, __LINE__);
-    customAssert(prevSymbol != NULL, __FILE__, __LINE__);
-    customAssert(num != NULL, __FILE__, __LINE__);
+    customAssert(symbol != NULL);
+    customAssert(prevSymbol != NULL);
+    customAssert(num != NULL);
 
     if ( *prevSymbol == 'x' || *prevSymbol == 'X' ) {
         return NUM_AFTER_X;
@@ -61,8 +61,8 @@ SolverErrors readNum(int * symbol, int * prevSymbol, double * num)
 
 SolverErrors readVar(int ifMult, int * power, int ifNum, double * num)
 {
-    customAssert(power != NULL, __FILE__, __LINE__);
-    customAssert(num != NULL, __FILE__, __LINE__);
+    customAssert(power != NULL);
+    customAssert(num != NULL);
 
     if ( !(ifNum) && (fabs(*num)) < eps ) {
         *num = 1.0;
@@ -80,9 +80,9 @@ SolverErrors readVar(int ifMult, int * power, int ifNum, double * num)
 
 SolverErrors readE(int * symbol, int * prevSymbol, double * num)
 {
-    customAssert(symbol != NULL, __FILE__, __LINE__);
-    customAssert(prevSymbol != NULL, __FILE__, __LINE__);
-    customAssert(num != NULL, __FILE__, __LINE__);
+    customAssert(symbol != NULL);
+    customAssert(prevSymbol != NULL);
+    customAssert(num != NULL);
 
     int signE = +1;
     int numInE = 0;
@@ -128,11 +128,11 @@ SolverErrors readE(int * symbol, int * prevSymbol, double * num)
 
 SolverErrors readMultiplication(int * symbol, int * prevSymbol, double * multiplicatedNum, double * num, int * ifMult)
 {
-    customAssert(symbol != NULL, __FILE__, __LINE__);
-    customAssert(prevSymbol != NULL, __FILE__, __LINE__);
-    customAssert(multiplicatedNum != NULL, __FILE__, __LINE__);
-    customAssert(num != NULL, __FILE__, __LINE__);
-    customAssert(ifMult != NULL, __FILE__, __LINE__);
+    customAssert(symbol != NULL);
+    customAssert(prevSymbol != NULL);
+    customAssert(multiplicatedNum != NULL);
+    customAssert(num != NULL);
+    customAssert(ifMult != NULL);
 
     if ( *prevSymbol == '+' || *prevSymbol == '-' || *prevSymbol == '*' || *prevSymbol == '/' ) {
         return TOO_MANY_OPERATIONS;
@@ -173,10 +173,10 @@ int readSign(int symbol, PartsOfEquation part)
 
 SolverErrors readMonomial(int * symbol, int * prevSymbol, int * power, double * number)
 {
-    customAssert(symbol != NULL, __FILE__, __LINE__);
-    customAssert(prevSymbol != NULL, __FILE__, __LINE__);
-    customAssert(power != NULL, __FILE__, __LINE__);
-    customAssert(number != NULL, __FILE__, __LINE__);
+    customAssert(symbol != NULL);
+    customAssert(prevSymbol != NULL);
+    customAssert(power != NULL);
+    customAssert(number != NULL);
 
     SolverErrors errorCode = NORMAL;
     int ifNum = 0;
@@ -244,8 +244,8 @@ SolverErrors readMonomial(int * symbol, int * prevSymbol, int * power, double * 
 
 void readNext(int * symbol, int * prevSymbol)
 {
-    customAssert(symbol != NULL, __FILE__, __LINE__);
-    customAssert(prevSymbol != NULL, __FILE__, __LINE__);
+    customAssert(symbol != NULL);
+    customAssert(prevSymbol != NULL);
 
     *prevSymbol = *symbol;
     *symbol = getchar();

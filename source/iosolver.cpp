@@ -25,7 +25,7 @@ void helpMenu()
     printf("    --help - description of program and commands.\n\n");
     printf("    simple - turning on simple mode.\n");
     printf("    detail - turning on detail mode.\n");
-    printf("    test   - turning on test mode.\n\n");
+    printf("    test   - turning on test mode.\n");
 }
 
 void pickMode(char * arg)
@@ -99,20 +99,20 @@ void detailMode()
 
 void testMode()
 {
-    int i = 0;
-
-    for(; i < numberOfTests; i++) {
+    for(int i = 0; i < numberOfTests; i++) {
         if ( checkTest(test_array[i]) == WRONG ) {
             return;
         }
     }
 
+    setColor(GREEN);
     printf("All tests are correct\n");
+    setColor(STANDART);
 }
 
 SolverErrors inputOfEquation(EquationData * coefficient)
 {
-    customAssert(coefficient != NULL, __FILE__, __LINE__);
+    customAssert(coefficient != NULL);
 
     PartsOfEquation part = LEFT_PART;
     SolverErrors errorCode = NORMAL;
@@ -211,7 +211,7 @@ int isEndingMonomial(int symbol, int prevSymbol)
 
 SolverErrors writeMonomial(int sign, double num, int power, EquationData * coefficient)
 {
-    customAssert(coefficient != NULL, __FILE__, __LINE__);
+    customAssert(coefficient != NULL);
 
     switch (power) {
     case 2:

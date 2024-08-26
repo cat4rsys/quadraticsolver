@@ -40,7 +40,7 @@ static void solveWithoutVariable(EquationData coefficient, Roots * root);
 
 static void solveSquare(EquationData coefficients, Roots * root)
 {
-    customAssert(root != NULL, __FILE__, __LINE__);
+    customAssert(root != NULL);
 
     double discriminant = (coefficients.b) * (coefficients.b) - 4 * (coefficients.a) * (coefficients.c);
 
@@ -64,7 +64,7 @@ static void solveSquare(EquationData coefficients, Roots * root)
 
 static void solveSquareWithoutC(EquationData coefficients, Roots * root)
 {
-    customAssert(root != NULL, __FILE__, __LINE__);
+    customAssert(root != NULL);
 
     double anotherRoot = - (coefficients.b) / (coefficients.a);
 
@@ -88,7 +88,7 @@ static void solveSquareWithoutC(EquationData coefficients, Roots * root)
 
 static void solveLinear(EquationData coefficients, Roots * root)
 {
-    customAssert(root != NULL, __FILE__, __LINE__);
+    customAssert(root != NULL);
 
     root->x1 = - (coefficients.c) / (coefficients.b);
     root->numberOfRoots = ONE_ROOT;
@@ -96,7 +96,7 @@ static void solveLinear(EquationData coefficients, Roots * root)
 
 static void solveWithoutVariable(EquationData coefficients, Roots * root)
 {
-    customAssert(root != NULL, __FILE__, __LINE__);
+    customAssert(root != NULL);
 
     if ( compareDouble(coefficients.c, 0) == EQUALS ) {
         root->numberOfRoots = INF_ROOTS;
@@ -108,7 +108,7 @@ static void solveWithoutVariable(EquationData coefficients, Roots * root)
 
 void solveEquation(EquationData coefficients, Roots * root)
 {
-    customAssert(root != NULL, __FILE__, __LINE__);
+    customAssert(root != NULL);
 
     switch(coefficients.type) {
     case SQUARE:

@@ -1,6 +1,8 @@
 #ifndef H_UTILITIES
 #define H_UTILITIES
 
+#include "iosolver.h"
+
 const double eps            = 1e-25; /**< error of double */
 
 /**
@@ -17,10 +19,14 @@ enum StatusDouble
  * \brief Assert, that doesn't stop program. Just gives warning about failed aseertion
  *
  * \param expression - expression for assertion
- * \param file - name of file in which assert used
- * \param line - number of line in which assert used
  */
-void customAssert(bool expression, const char * file, int line);
+#define customAssert(expression) { \
+    if( !expression ) { \
+        setColor(RED); \
+        printf("Assertion failed: file %s, line %d\n", __FILE__, __LINE__); \
+        setColor(STANDART); \
+    } \
+}
 
 /**
  * \brief Compares two doubles

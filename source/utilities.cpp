@@ -11,7 +11,7 @@ void skipInput(int symbol)
         }
     }
 }
-
+/*
 void customAssert(bool expression, const char * file, int line)
 {
     if ( expression ) {
@@ -24,7 +24,7 @@ void customAssert(bool expression, const char * file, int line)
         return;
     }
 }
-
+*/
 StatusDouble compareDouble(double number1, double number2)
 {
     if ( fabs(number1 - number2) < eps ) {
