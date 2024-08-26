@@ -38,4 +38,4 @@ Contact info:
 
 ## Example of work
 
-[example of work](https://github.com/cat4rsys/quadraticsolver/blob/main/images/example.png)
+![example of work](https://github.com/cat4rsys/quadraticsolver/blob/main/images/example.png)
