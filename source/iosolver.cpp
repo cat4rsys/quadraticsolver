@@ -109,10 +109,8 @@ void testMode()
         setColor(STANDART);
     }
     TestData test = {};
-    for(int i = 0; i < numberOfTests; i++) {
-        test = {};
-        fscanf(pointerFile, "%d %lf %lf %lf %lf %lf %d", &test.numberOfThisTest, &test.a, &test.b, &test.c, &test.x1, &test.x2,
-                                                         ((int*)&(test.numberOfRoots)));
+    for(; fscanf(pointerFile, "%d %lf %lf %lf %lf %lf %d",
+                 &test.numberOfThisTest, &test.a, &test.b, &test.c, &test.x1, &test.x2, ((int*)&(test.numberOfRoots))) != EOF;) {
         if ( checkTest(test) == WRONG ) {
             return;
         }

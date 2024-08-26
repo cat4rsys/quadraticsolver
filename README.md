@@ -10,14 +10,14 @@ In my program you can enter full equation for solve it. You can enter float numb
 
 ### Installing
 
-* Run make file by writing "make" in folder with program.
+* Run makefile by writing "make" in folder with program.
 * For introduction for my programyou can write:
 
 ~~~
 .\boot.exe --help
 ~~~
 
-### Modes of work
+## Modes of work
 
 * Simple mode - mode with minimum output and opportunity to input a lot of equations.
 * Detail mode - mode, that instructing you, but you can enter only one equation.
@@ -43,7 +43,28 @@ For boot test mode you can write:
 .\boot.exe test
 ~~~
 
-### Author
+## Test system
+
+You can use file for testing solve system. For that you should boot makefile as:
+
+~~~
+make file=1
+~~~
+
+You can add tests at file at this form:
+
+~~~
+<Number of test> <a> <b> <c> <x1> <x2> <Number of roots>
+~~~
+
+* a - a-coefficient
+* b - b-coefficient
+* c - c-coefficient
+* x1 - less root
+* x2 - greater root
+
+For writing, that equation has infinite number of roots you should use "3".
+## Author
 
 Alexey Kornilov
 
@@ -51,7 +72,7 @@ Contact info:
 
 * Telegram [@alexa_573](https://t.me/alexa_573)
 
-### Version History
+## Version History
 
 * 1.0
   * Added test system
