@@ -15,6 +15,7 @@ ResultOfTest checkTest(TestData test)
     if ( compareDouble(calculatedRoots.x1, realRoots.x1) == EQUALS &&
          compareDouble(calculatedRoots.x2, realRoots.x2) == EQUALS &&
          calculatedRoots.numberOfRoots == realRoots.numberOfRoots ) {
+        printf("Test %d CORRECT\n", test.numberOfThisTest);
         return CORRECT;
     }
 

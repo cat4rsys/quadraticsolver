@@ -11,6 +11,10 @@ BUILD := build
 INCLUDES := include
 OUTPUT := boot.exe
 
+ifeq ($(file), 1)
+CFLAGS += -D FILEON
+endif
+
 $(OUTPUT): $(OBJ)
 	$(CC) $(OBJ) -o $@
 

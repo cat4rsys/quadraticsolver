@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <cstring>
 #include <windows.h>
+#include <cstdio>
 #include "read.h"
 #include "iosolver.h"
 #include "solve.h"
@@ -99,11 +100,35 @@ void detailMode()
 
 void testMode()
 {
+#ifdef FILEON
+
+    FILE * pointerFile = fopen("files\\testdata.txt", "r");
+    if ( pointerFile == NULL ) {
+        setColor(RED);
+        printf("ERROR OF READING FILE");
+        setColor(STANDART);
+    }
+    TestData test = {};
+    for(int i = 0; i < numberOfTests; i++) {
+        test = {};
+        fscanf(pointerFile, "%d %lf %lf %lf %lf %lf %d", &test.numberOfThisTest, &test.a, &test.b, &test.c, &test.x1, &test.x2,
+                                                         ((int*)&(test.numberOfRoots)));
+        if ( checkTest(test) == WRONG ) {
+            return;
+        }
+    }
+
+    fclose(pointerFile);
+
+#else
+
     for(int i = 0; i < numberOfTests; i++) {
         if ( checkTest(test_array[i]) == WRONG ) {
             return;
         }
     }
+
+#endif
 
     setColor(GREEN);
     printf("All tests are correct\n");
