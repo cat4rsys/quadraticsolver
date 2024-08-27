@@ -2,6 +2,17 @@
 
 Solves square equations.
 
+## Contents
+
++ [Description](#description)
++ [Getting started](#getting-started)
+  + [Installing](#installing)
++ [Modes of work](#modes-of-work)
++ [Test system](#test-system)
++ [Author](#author)
++ [Version history](#version-history)
++ [Example of work](#example-of-work)
+
 ## Description
 
 In my program you can enter full equation for solve it. You can enter float numbers, numbers with exponential part. Also you can use multiplication, division, add and substraction. For writing x^2 you can use "xx".
