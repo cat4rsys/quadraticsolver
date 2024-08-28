@@ -20,7 +20,7 @@ ResultOfTest checkTest(TestData test)
     }
 
     printf("ERROR at test №%d (a = %lg, b = %lg, c = %lg):\n", test.numberOfThisTest, coefficients.a, coefficients.b, coefficients.c);
-    printf("Expected: x1 = %lg, x2 = %lg, number of roots = %d\n", realRoots.x1, realRoots.x2, realRoots.numberOfRoots);
+    printf("Expected:   x1 = %lg, x2 = %lg, number of roots = %d\n", realRoots.x1, realRoots.x2, realRoots.numberOfRoots);
     printf("Calculated: x1 = %lg, x2 = %lg, number of roots = %d\n",
            calculatedRoots.x1, calculatedRoots.x2, calculatedRoots.numberOfRoots);
 
