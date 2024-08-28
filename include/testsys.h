@@ -1,7 +1,7 @@
 #ifndef H_TESTSYS
 #define H_TESTSYS
 
-const int    numberOfTests  = 8;                 /**< Number of all tests */
+const int numberOfTests = 8;                     /**< Number of all tests */
 
 /**
  * \brief Possible cases of test

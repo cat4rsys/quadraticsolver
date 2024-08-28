@@ -40,12 +40,12 @@ static void solveWithoutVariable(EquationData coefficient, Roots * root);
 
 static void solveSquare(EquationData coefficients, Roots * root)
 {
-    customAssert(root != NULL);
+    CUSTOM_ASSERT(root != NULL);
 
     double discriminant = (coefficients.b) * (coefficients.b) - 4 * (coefficients.a) * (coefficients.c);
 
     if ( compareDouble(discriminant, 0) == EQUALS ) {
-        root->x1 = - (coefficients.b) / (2 * (coefficients.a));
+        root->x1            = - (coefficients.b) / (2 * (coefficients.a));
         root->numberOfRoots = ONE_ROOT;
     }
 
@@ -56,47 +56,47 @@ static void solveSquare(EquationData coefficients, Roots * root)
     else if ( compareDouble(discriminant, 0) == GREATER ) {
         double sqrtDiscriminant = sqrt(discriminant);
 
-        root->x1 = ( - (coefficients.b) - sqrtDiscriminant) / (2 * (coefficients.a));
-        root->x2 = ( - (coefficients.b) + sqrtDiscriminant) / (2 * (coefficients.a));
+        root->x1            = ( - (coefficients.b) - sqrtDiscriminant) / (2 * (coefficients.a));
+        root->x2            = ( - (coefficients.b) + sqrtDiscriminant) / (2 * (coefficients.a));
         root->numberOfRoots = TWO_ROOTS;
     }
 }
 
 static void solveSquareWithoutC(EquationData coefficients, Roots * root)
 {
-    customAssert(root != NULL);
+    CUSTOM_ASSERT(root != NULL);
 
     double anotherRoot = - (coefficients.b) / (coefficients.a);
 
     if ( compareDouble(anotherRoot, 0) == EQUALS ) {
-        root->x1 = 0;
+        root->x1            = 0;
         root->numberOfRoots = ONE_ROOT;
     }
 
     else if ( compareDouble(anotherRoot, 0) == LESS ) {
-        root->x2 = 0;
-        root->x1 = anotherRoot;
+        root->x2            = 0;
+        root->x1            = anotherRoot;
         root->numberOfRoots = TWO_ROOTS;
     }
 
     else if ( compareDouble(anotherRoot, 0) == GREATER ) {
-        root->x1 = 0;
-        root->x2 = anotherRoot;
+        root->x1            = 0;
+        root->x2            = anotherRoot;
         root->numberOfRoots = TWO_ROOTS;
     }
 }
 
 static void solveLinear(EquationData coefficients, Roots * root)
 {
-    customAssert(root != NULL);
+    CUSTOM_ASSERT(root != NULL);
 
-    root->x1 = - (coefficients.c) / (coefficients.b);
+    root->x1            = - (coefficients.c) / (coefficients.b);
     root->numberOfRoots = ONE_ROOT;
 }
 
 static void solveWithoutVariable(EquationData coefficients, Roots * root)
 {
-    customAssert(root != NULL);
+    CUSTOM_ASSERT(root != NULL);
 
     if ( compareDouble(coefficients.c, 0) == EQUALS ) {
         root->numberOfRoots = INF_ROOTS;
@@ -108,7 +108,7 @@ static void solveWithoutVariable(EquationData coefficients, Roots * root)
 
 void solveEquation(EquationData coefficients, Roots * root)
 {
-    customAssert(root != NULL);
+    CUSTOM_ASSERT(root != NULL);
 
     switch(coefficients.type) {
     case SQUARE:

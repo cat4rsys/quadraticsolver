@@ -9,4 +9,6 @@ int main(int argc, char * argv[])
     }
 
     pickMode(argv[1]);
+
+    return 0;
 }

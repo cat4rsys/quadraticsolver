@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <windows.h>
 #include "iosolver.h"
 #include "utilities.h"
 
@@ -18,9 +19,14 @@ StatusDouble compareDouble(double number1, double number2)
         return EQUALS;
     }
 
-    if ( (number1 - number2) > eps ) {
+    if (   (number1 - number2)   > eps ) {
         return GREATER;
     }
 
     return LESS;
+}
+
+void setColor(int color)
+{
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }

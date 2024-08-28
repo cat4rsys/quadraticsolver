@@ -1,20 +1,9 @@
 #ifndef H_IOSOLVER
 #define H_IOSOLVER
+
 #include <solve.h>
-#include <windows.h>
 
 const int normalAccuracy = 3;                    /**< Accuracy of output in simple mode */
-
-#define setColor(color) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
-
-// COLORS
-
-const int RED = 12;                 /**< Red text color */
-const int CYAN = 11;                /**< Cyan text color */
-const int GREEN = 10;               /**< Green text color */
-const int PURPLE = 13;              /**< Purple text color */
-const int YELLOW = 14;              /**< Yellow text color */
-const int STANDART = 15;            /**< Standart text color */
 
 /**
  * \brief Parts of equation

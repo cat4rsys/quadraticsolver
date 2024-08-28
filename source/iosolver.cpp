@@ -72,7 +72,7 @@ void simpleMode()
 
 void detailMode()
 {
-    SolverErrors errorCode = NORMAL;
+    SolverErrors errorCode    = NORMAL;
     EquationData coefficients = {0, 0, 0};
 
     printf("Enter your equation. To exit enter \"q\".\n");
@@ -135,12 +135,14 @@ void testMode()
 
 SolverErrors inputOfEquation(EquationData * coefficient)
 {
-    customAssert(coefficient != NULL);
+    CUSTOM_ASSERT(coefficient != NULL);
 
-    PartsOfEquation part = LEFT_PART;
+    PartsOfEquation part   = LEFT_PART;
     SolverErrors errorCode = NORMAL;
+
     int prevSymbol = 0;
-    int symbol = getchar();
+    int symbol     = getchar();
+
     int sign = +1;
 
     while ( symbol != '\n' ) {
@@ -177,7 +179,7 @@ SolverErrors inputOfEquation(EquationData * coefficient)
 
         else if ( isBeginnigMonomial(symbol) ) {
             double num = 0;
-            int power = 0;
+            int power  = 0;
 
             if ( (errorCode = readMonomial(&symbol, &prevSymbol, &power, &num)) == NORMAL ) {
                 errorCode = writeMonomial(sign, num, power, coefficient);
@@ -231,10 +233,9 @@ int isEndingMonomial(int symbol, int prevSymbol)
     }
 }
 
-
 SolverErrors writeMonomial(int sign, double num, int power, EquationData * coefficient)
 {
-    customAssert(coefficient != NULL);
+    CUSTOM_ASSERT(coefficient != NULL);
 
     switch (power) {
     case 2:
@@ -301,7 +302,7 @@ void printBootError()
     setColor(RED);
     printf("ERROR OF BOOT\n");
     printf("Try \"--help\" for help\n");
-    setColor(STANDART)
+    setColor(STANDART);
 }
 
 void printRoots(Roots root, SolverErrors errorCode, int accuracy)
@@ -340,18 +341,18 @@ void printRoots(Roots root, SolverErrors errorCode, int accuracy)
 int getAccuracy()
 {
     int accuracy = 0;
-    int v = 0;
+    int symbol   = 0;
 
     printf("Enter accuracy of output: ");
 
-    while ( (v = getchar()) != '\n' ) {
-        if ( !(isdigit(v)) || (accuracy == 0 && v == '0') ) {
-            skipInput(v);
+    while ( (symbol = getchar()) != '\n' ) {
+        if ( !(isdigit(symbol)) || (accuracy == 0 && symbol == '0') ) {
+            skipInput(symbol);
             accuracy = 0;
             printf("Wrong input. Try again: ");
         }
         else {
-            accuracy = accuracy * 10 + v - '0';
+            accuracy = accuracy * 10 + symbol - '0';
         }
     }
 

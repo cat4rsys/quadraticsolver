@@ -1,5 +1,6 @@
 #ifndef H_SOLVE
 #define H_SOLVE
+
 #include <stdio.h>
 
 /**
@@ -36,7 +37,7 @@ struct EquationData
 };
 
 /**
- *\brief Struct for information about roots
+ * \brief Struct for information about roots
  */
 typedef struct
 {
@@ -47,14 +48,18 @@ typedef struct
 
 /**
  * \brief  Solves equation and writes roots
+ *
  * \param  coefficient - struct with coefficients and type of equation
+ *
  * \return Roots and number of roots. Function writes it in struct Roots
  */
 void solveEquation(EquationData coefficient, Roots * root);
 
 /**
  * \brief  Gets type of equation by coefficients
+ *
  * \param  coefficient - coefficients of equation
+ *
  * \return type of equation
  */
 TypeOfEquation getType(EquationData coefficient);

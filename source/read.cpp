@@ -21,15 +21,15 @@ SolverErrors readExit()
 
 SolverErrors readNum(int * symbol, int * prevSymbol, double * num)
 {
-    customAssert(symbol != NULL);
-    customAssert(prevSymbol != NULL);
-    customAssert(num != NULL);
+    CUSTOM_ASSERT(symbol     != NULL);
+    CUSTOM_ASSERT(prevSymbol != NULL);
+    CUSTOM_ASSERT(num        != NULL);
 
     if ( *prevSymbol == 'x' || *prevSymbol == 'X' ) {
         return NUM_AFTER_X;
     }
 
-    int ifDot = 0;
+    int ifDot        = 0;
     int numsAfterDot = 0;
 
     while ( *symbol == ' ' || isdigit(*symbol) || *symbol == '.' || *symbol == ',' ) {
@@ -61,8 +61,8 @@ SolverErrors readNum(int * symbol, int * prevSymbol, double * num)
 
 SolverErrors readVar(int ifMult, int * power, int ifNum, double * num)
 {
-    customAssert(power != NULL);
-    customAssert(num != NULL);
+    CUSTOM_ASSERT(power != NULL);
+    CUSTOM_ASSERT(num   != NULL);
 
     if ( !(ifNum) && (fabs(*num)) < eps ) {
         *num = 1.0;
@@ -80,11 +80,11 @@ SolverErrors readVar(int ifMult, int * power, int ifNum, double * num)
 
 SolverErrors readE(int * symbol, int * prevSymbol, double * num)
 {
-    customAssert(symbol != NULL);
-    customAssert(prevSymbol != NULL);
-    customAssert(num != NULL);
+    CUSTOM_ASSERT(symbol     != NULL);
+    CUSTOM_ASSERT(prevSymbol != NULL);
+    CUSTOM_ASSERT(num        != NULL);
 
-    int signE = +1;
+    int signE  = +1;
     int numInE = 0;
 
     readNext(symbol, prevSymbol);
@@ -128,11 +128,11 @@ SolverErrors readE(int * symbol, int * prevSymbol, double * num)
 
 SolverErrors readMultiplication(int * symbol, int * prevSymbol, double * multiplicatedNum, double * num, int * ifMult)
 {
-    customAssert(symbol != NULL);
-    customAssert(prevSymbol != NULL);
-    customAssert(multiplicatedNum != NULL);
-    customAssert(num != NULL);
-    customAssert(ifMult != NULL);
+    CUSTOM_ASSERT(symbol           != NULL);
+    CUSTOM_ASSERT(prevSymbol       != NULL);
+    CUSTOM_ASSERT(multiplicatedNum != NULL);
+    CUSTOM_ASSERT(num              != NULL);
+    CUSTOM_ASSERT(ifMult           != NULL);
 
     if ( *prevSymbol == '+' || *prevSymbol == '-' || *prevSymbol == '*' || *prevSymbol == '/' ) {
         return TOO_MANY_OPERATIONS;
@@ -144,7 +144,7 @@ SolverErrors readMultiplication(int * symbol, int * prevSymbol, double * multipl
         *multiplicatedNum = *num;
     }
 
-    ( *symbol == '*' ) ? *ifMult = 1: *ifMult = -1;
+    ( *symbol == '*' ) ? *ifMult = 1 : *ifMult = -1;
 
     *num = 0;
 
@@ -155,7 +155,7 @@ SolverErrors readMultiplication(int * symbol, int * prevSymbol, double * multipl
 
 int readSign(int symbol, PartsOfEquation part)
 {
-    if ( symbol == '+' && part == LEFT_PART ) {
+    if (      symbol == '+' && part == LEFT_PART  ) {
         return +1;
     }
     else if ( symbol == '-' && part == RIGHT_PART ) {
@@ -173,15 +173,17 @@ int readSign(int symbol, PartsOfEquation part)
 
 SolverErrors readMonomial(int * symbol, int * prevSymbol, int * power, double * number)
 {
-    customAssert(symbol != NULL);
-    customAssert(prevSymbol != NULL);
-    customAssert(power != NULL);
-    customAssert(number != NULL);
+    CUSTOM_ASSERT(symbol     != NULL);
+    CUSTOM_ASSERT(prevSymbol != NULL);
+    CUSTOM_ASSERT(power      != NULL);
+    CUSTOM_ASSERT(number     != NULL);
 
     SolverErrors errorCode = NORMAL;
-    int ifNum = 0;
+
+    int ifNum  = 0;
     int ifMult = 0;
-    double num = 0;
+
+    double num              = 0;
     double multiplicatedNum = 0;
 
     while ( !isEndingMonomial(*symbol, *prevSymbol) ) {
@@ -244,9 +246,9 @@ SolverErrors readMonomial(int * symbol, int * prevSymbol, int * power, double * 
 
 void readNext(int * symbol, int * prevSymbol)
 {
-    customAssert(symbol != NULL);
-    customAssert(prevSymbol != NULL);
+    CUSTOM_ASSERT(symbol     != NULL);
+    CUSTOM_ASSERT(prevSymbol != NULL);
 
     *prevSymbol = *symbol;
-    *symbol = getchar();
+    *symbol     = getchar();
 }

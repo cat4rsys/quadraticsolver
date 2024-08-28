@@ -3,7 +3,16 @@
 
 #include "iosolver.h"
 
-const double eps            = 1e-25; /**< error of double */
+const double eps = 1e-25;                        /**< error of double */
+
+// COLORS
+
+const int RED       = 12;                        /**< Red text color */
+const int CYAN      = 11;                        /**< Cyan text color */
+const int GREEN     = 10;                        /**< Green text color */
+const int PURPLE    = 13;                        /**< Purple text color */
+const int YELLOW    = 14;                        /**< Yellow text color */
+const int STANDART  = 15;                        /**< Standart text color */
 
 /**
  * \brief Result of comparing two doubles
@@ -20,12 +29,12 @@ enum StatusDouble
  *
  * \param expression - expression for assertion
  */
-#define customAssert(expression) { \
-    if( !expression ) { \
-        setColor(RED); \
+#define CUSTOM_ASSERT(expression) {                                          \
+    if( !expression ) {                                                     \
+        setColor(RED);                                                      \
         printf("Assertion failed: file %s, line %d\n", __FILE__, __LINE__); \
-        setColor(STANDART); \
-    } \
+        setColor(STANDART);                                                 \
+    }                                                                       \
 }
 
 /**
@@ -41,7 +50,15 @@ StatusDouble compareDouble(double number1, double number2);
 /**
  * \brief Skips input if last entered symbol not "\n"
  *
- * \param symbol - last entered symbol */
+ * \param symbol - last entered symbol
+ */
 void skipInput(int symbol);
+
+/**
+ * \brief Sets color for output
+ *
+ * \param color - number of color
+ */
+void setColor(int color);
 
 #endif // H_UTILITUS
