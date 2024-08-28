@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "iosolver.h"
+#include "solve.h"
 #include "utilities.h"
 #include "testsys.h"
 

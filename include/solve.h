@@ -1,8 +1,6 @@
 #ifndef H_SOLVE
 #define H_SOLVE
 
-#include <stdio.h>
-
 /**
  * \brief Enumeration for number of roots
  */

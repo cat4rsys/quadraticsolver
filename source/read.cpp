@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <ctype.h>
 #include "read.h"
 #include "iosolver.h"
-#include "solve.h"
 #include "utilities.h"
 
 SolverErrors readExit()
@@ -41,12 +39,10 @@ SolverErrors readNum(int * symbol, int * prevSymbol, double * num)
         }
 
         if ( *symbol == '.' || *symbol == ',' ) {
-            if (ifDot == 0) {
-                ifDot = 1;
-            }
-            else {
+            if (ifDot == 1) {
                 return TWO_OR_MORE_FRACTIONAL;
             }
+            ifDot = 1;
         }
 
         readNext(symbol, prevSymbol);
@@ -64,7 +60,7 @@ SolverErrors readVar(int ifMult, int * power, int ifNum, double * num)
     CUSTOM_ASSERT(power != NULL);
     CUSTOM_ASSERT(num   != NULL);
 
-    if ( !(ifNum) && (fabs(*num)) < eps ) {
+    if ( !(ifNum) ) {
         *num = 1.0;
     }
 
@@ -249,6 +245,8 @@ void readNext(int * symbol, int * prevSymbol)
     CUSTOM_ASSERT(symbol     != NULL);
     CUSTOM_ASSERT(prevSymbol != NULL);
 
-    *prevSymbol = *symbol;
-    *symbol     = getchar();
+    if ( *symbol != ' ' ) {
+        *prevSymbol = *symbol;
+    }
+    *symbol = getchar();
 }

@@ -1,15 +1,15 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include <ctype.h>
 #include <cstring>
-#include <windows.h>
-#include <cstdio>
 #include "read.h"
 #include "iosolver.h"
-#include "solve.h"
 #include "testsys.h"
 #include "utilities.h"
+
+const char * helpFlag   = "--help";
+const char * simpleFlag = "--simple";
+const char * detailFlag = "--detail";
+const char * testFlag   = "--test";
 
 void helpMenu()
 {
@@ -23,24 +23,24 @@ void helpMenu()
     printf("Test mode - mode allowing to test how program solving equations. For developers.\n");
     printf("(For first use recommended to use Detail mode)\n");
     printf("\nThese are common Quadratic Solver commands:\n");
-    printf("    --help - description of program and commands.\n\n");
-    printf("    simple - turning on simple mode.\n");
-    printf("    detail - turning on detail mode.\n");
-    printf("    test   - turning on test mode.\n");
+    printf("    %s   - description of program and commands.\n\n", helpFlag);
+    printf("    %s - turning on simple mode.\n", simpleFlag);
+    printf("    %s - turning on detail mode.\n", detailFlag);
+    printf("    %s   - turning on test mode.\n", testFlag);
 }
 
-void pickMode(char * arg)
+void execMode(const char * arg)
 {
-    if ( !strcmp(arg, "--help") ) {
+    if ( !strcmp(arg, helpFlag) ) {
         helpMenu();
     }
-    else if ( !strcmp(arg, "simple") ) {
+    else if ( !strcmp(arg, simpleFlag) ) {
         simpleMode();
     }
-    else if ( !strcmp(arg, "detail") ) {
+    else if ( !strcmp(arg, detailFlag) ) {
         detailMode();
     }
-    else if ( !strcmp(arg, "test") ) {
+    else if ( !strcmp(arg, testFlag) ) {
         testMode();
     }
     else {
@@ -149,9 +149,8 @@ SolverErrors inputOfEquation(EquationData * coefficient)
         if ( symbol == 'q' && prevSymbol == 0 ) {
             return readExit();
         }
-
-        else if ( symbol == ' ' );
-
+        else if ( symbol == ' ' ) {
+        }
         else if ( symbol == '+' || symbol == '-' ) {
             if ( prevSymbol == '+' || prevSymbol == '-' || prevSymbol == '*' || prevSymbol == '/' ) {
                 skipInput(symbol);
@@ -160,37 +159,32 @@ SolverErrors inputOfEquation(EquationData * coefficient)
 
             sign = readSign(symbol, part);
         }
-
         else if ( symbol == '=' ) {
             sign = -1;
 
-            if (part == LEFT_PART) {
-                part = RIGHT_PART;
-            }
-            else {
+            if (part == RIGHT_PART) {
                 skipInput(symbol);
                 return TWO_OR_MORE_EQUALS;
             }
-        }
 
+            part = RIGHT_PART;
+        }
         else if ( symbol == '\n' ) {
             return NORMAL;
         }
-
-        else if ( isBeginnigMonomial(symbol) ) {
-            double num = 0;
+        else if ( isBeginningMonomial(symbol) ) {
+            double num = 0.0;
             int power  = 0;
 
-            if ( (errorCode = readMonomial(&symbol, &prevSymbol, &power, &num)) == NORMAL ) {
-                errorCode = writeMonomial(sign, num, power, coefficient);
-                continue;
-            }
-            else {
+            errorCode = readMonomial(&symbol, &prevSymbol, &power, &num);
+            if ( errorCode != NORMAL ) {
                 skipInput(symbol);
                 return errorCode;
             }
-        }
 
+            errorCode = writeMonomial(sign, num, power, coefficient);
+            continue;
+        }
         else {
             skipInput(symbol);
             return UNKNOWN_SYMBOL;
@@ -207,45 +201,43 @@ SolverErrors inputOfEquation(EquationData * coefficient)
     if ( part == LEFT_PART ) {
         return NO_EQUAL;
     }
-    else {
-        return NORMAL;
-    }
+
+    return NORMAL;
 }
 
-int isBeginnigMonomial(int symbol)
+bool isBeginningMonomial(int symbol)
 {
     if (isdigit(symbol) || symbol == 'x') {
         return 1;
     }
-    else {
-        return 0;
-    }
+
+    return 0;
 }
 
-int isEndingMonomial(int symbol, int prevSymbol)
+bool isEndingMonomial(int symbol, int prevSymbol)
 {
-    if ( (symbol == '+' || symbol == '-' || symbol == '\n' || symbol == '=') &&
-        (tolower(prevSymbol) != 'x' || tolower(prevSymbol) != 'e') ) {
+    if (strchr("+-=\n", symbol) && (tolower(prevSymbol) != 'x' || tolower(prevSymbol) != 'e') ) {
         return 1;
     }
-    else {
-        return 0;
-    }
+
+    return 0;
 }
 
 SolverErrors writeMonomial(int sign, double num, int power, EquationData * coefficient)
 {
     CUSTOM_ASSERT(coefficient != NULL);
 
+    num *= sign;
+
     switch (power) {
     case 2:
-        coefficient->a += sign * num;
+        coefficient->a += num;
         break;
     case 1:
-        coefficient->b += sign * num;
+        coefficient->b += num;
         break;
     case 0:
-        coefficient->c += sign * num;
+        coefficient->c += num;
         break;
     default:
         return INCORRECT_POWER;

@@ -42,7 +42,7 @@ void helpMenu();
 /**
  * \brief Picks mode of work by argument of terminal
  */
-void pickMode(char * arg);
+void execMode(const char * arg);
 
 /**
  * \brief Turns on simple mode
@@ -87,7 +87,7 @@ SolverErrors writeMonomial(int sign, double num, int power, EquationData * coeff
  *
  * \returns 1 if symbol is beginning of monomial and 0 if symbol is not
  */
-int isBeginnigMonomial(int symbol);
+bool isBeginningMonomial(int symbol);
 
 /**
  * \brief Checks if symbol is ending of monomial
@@ -97,7 +97,7 @@ int isBeginnigMonomial(int symbol);
  *
  * \returns 1 if symbol is beginning of monomial and 0 if symbol is not
  */
-int isEndingMonomial(int symbol, int prevSymbol);
+bool isEndingMonomial(int symbol, int prevSymbol);
 
 /**
  * \brief Prints error, coded by errorCode

@@ -1,18 +1,16 @@
 #ifndef H_UTILITIES
 #define H_UTILITIES
 
-#include "iosolver.h"
-
-const double eps = 1e-25;                        /**< error of double */
+#include <windows.h>
 
 // COLORS
 
-const int RED       = 12;                        /**< Red text color */
-const int CYAN      = 11;                        /**< Cyan text color */
-const int GREEN     = 10;                        /**< Green text color */
-const int PURPLE    = 13;                        /**< Purple text color */
-const int YELLOW    = 14;                        /**< Yellow text color */
-const int STANDART  = 15;                        /**< Standart text color */
+const WORD RED       = 12;                        /**< Red text color */
+const WORD CYAN      = 11;                        /**< Cyan text color */
+const WORD GREEN     = 10;                        /**< Green text color */
+const WORD PURPLE    = 13;                        /**< Purple text color */
+const WORD YELLOW    = 14;                        /**< Yellow text color */
+const WORD STANDART  = 15;                        /**< Standart text color */
 
 /**
  * \brief Result of comparing two doubles
@@ -29,8 +27,8 @@ enum StatusDouble
  *
  * \param expression - expression for assertion
  */
-#define CUSTOM_ASSERT(expression) {                                          \
-    if( !expression ) {                                                     \
+#define CUSTOM_ASSERT(expression) {                                         \
+    if( !(expression) ) {                                                   \
         setColor(RED);                                                      \
         printf("Assertion failed: file %s, line %d\n", __FILE__, __LINE__); \
         setColor(STANDART);                                                 \
@@ -59,6 +57,6 @@ void skipInput(int symbol);
  *
  * \param color - number of color
  */
-void setColor(int color);
+void setColor(WORD color);
 
 #endif // H_UTILITUS

@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "read.h"
-#include "iosolver.h"
 #include "solve.h"
 #include "utilities.h"
 
@@ -48,11 +46,9 @@ static void solveSquare(EquationData coefficients, Roots * root)
         root->x1            = - (coefficients.b) / (2 * (coefficients.a));
         root->numberOfRoots = ONE_ROOT;
     }
-
     else if ( compareDouble(discriminant, 0) == LESS ) {
         root->numberOfRoots = ZERO_ROOTS;
     }
-
     else if ( compareDouble(discriminant, 0) == GREATER ) {
         double sqrtDiscriminant = sqrt(discriminant);
 
@@ -72,13 +68,11 @@ static void solveSquareWithoutC(EquationData coefficients, Roots * root)
         root->x1            = 0;
         root->numberOfRoots = ONE_ROOT;
     }
-
     else if ( compareDouble(anotherRoot, 0) == LESS ) {
         root->x2            = 0;
         root->x1            = anotherRoot;
         root->numberOfRoots = TWO_ROOTS;
     }
-
     else if ( compareDouble(anotherRoot, 0) == GREATER ) {
         root->x1            = 0;
         root->x2            = anotherRoot;

@@ -1,14 +1,13 @@
-#include <stdio.h>
 #include "iosolver.h"
 
-int main(int argc, char * argv[])
+int main(int argc, const char * argv[])
 {
     if (argc != 2) {
         printBootError();
         return 1;
     }
 
-    pickMode(argv[1]);
+    execMode(argv[1]);
 
     return 0;
 }
