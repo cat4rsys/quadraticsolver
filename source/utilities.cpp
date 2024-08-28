@@ -11,20 +11,7 @@ void skipInput(int symbol)
         }
     }
 }
-/*
-void customAssert(bool expression, const char * file, int line)
-{
-    if ( expression ) {
-        return;
-    }
-    else {
-        setColor(RED);
-        printf("Assertion failed: file %s, line %d\n", file, line);
-        setColor(STANDART);
-        return;
-    }
-}
-*/
+
 StatusDouble compareDouble(double number1, double number2)
 {
     if ( fabs(number1 - number2) < eps ) {
