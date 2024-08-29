@@ -293,7 +293,7 @@ void printBootError()
 {
     setColor(RED);
     printf("ERROR OF BOOT\n");
-    printf("Try \"--help\" for help\n");
+    printf("Try \"%s\" for help\n", helpFlag);
     setColor(STANDART);
 }
 
