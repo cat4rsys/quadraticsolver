@@ -90,19 +90,33 @@ $(function(){ initResizable(false); });
 <div class="textblock"><p><a class="anchor" id="autotoc_md0"></a></p>
 <p>Solves square equations.</p>
 <h1><a class="anchor" id="autotoc_md1"></a>
+Contents</h1>
+<ul>
+<li>Description</li>
+<li>Getting started<ul>
+<li>Installing</li>
+</ul>
+</li>
+<li>Modes of work</li>
+<li>Test system</li>
+<li>Author</li>
+<li>Version history</li>
+<li>Example of work</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md2"></a>
 Description</h1>
 <p>In my program you can enter full equation for solve it. You can enter float numbers, numbers with exponential part. Also you can use multiplication, division, add and substraction. For writing x^2 you can use "xx".</p>
-<h1><a class="anchor" id="autotoc_md2"></a>
+<h1><a class="anchor" id="autotoc_md3"></a>
 Getting started</h1>
-<h2><a class="anchor" id="autotoc_md3"></a>
+<h2><a class="anchor" id="autotoc_md4"></a>
 Installing</h2>
 <ul>
-<li>Run make file by writing "make" in folder with program.</li>
+<li>Run makefile by writing "make" in folder with program.</li>
 <li>For introduction for my programyou can write:</li>
 </ul>
 <div class="fragment"><div class="line">.\boot.exe --help</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
-Modes of work</h2>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
+Modes of work</h1>
 <ul>
 <li>Simple mode - mode with minimum output and opportunity to input a lot of equations.</li>
 <li>Detail mode - mode, that instructing you, but you can enter only one equation.</li>
@@ -115,15 +129,29 @@ Modes of work</h2>
 <div class="fragment"><div class="line">.\boot.exe detail</div>
 </div><!-- fragment --><p>For boot test mode you can write:</p>
 <div class="fragment"><div class="line">.\boot.exe test</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
-Author</h2>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
+Test system</h1>
+<p>You can use file for testing solve system. For that you should boot makefile as:</p>
+<div class="fragment"><div class="line">make file=1</div>
+</div><!-- fragment --><p>You can add tests at file at this form:</p>
+<div class="fragment"><div class="line">&lt;Number of test&gt; &lt;a&gt; &lt;b&gt; &lt;c&gt; &lt;x1&gt; &lt;x2&gt; &lt;Number of roots&gt;</div>
+</div><!-- fragment --><ul>
+<li>a - a-coefficient</li>
+<li>b - b-coefficient</li>
+<li>c - c-coefficient</li>
+<li>x1 - less root</li>
+<li>x2 - greater root</li>
+</ul>
+<p>For writing, that equation has infinite number of roots you should use "3". </p>
+<h1><a class="anchor" id="autotoc_md7"></a>
+Author</h1>
 <p>Alexey Kornilov</p>
 <p>Contact info:</p>
 <ul>
 <li>Telegram <a href="https://t.me/alexa_573">@alexa_573</a></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md6"></a>
-Version History</h2>
+<h1><a class="anchor" id="autotoc_md8"></a>
+Version History</h1>
 <ul>
 <li>1.0<ul>
 <li>Added test system</li>
@@ -132,7 +160,7 @@ Version History</h2>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md7"></a>
+<h1><a class="anchor" id="autotoc_md9"></a>
 Example of work</h1>
 <p><img src="https://github.com/cat4rsys/quadraticsolver/blob/main/images/example.png" alt="example of work" class="inline"/> </p>
 </div></div><!-- contents -->

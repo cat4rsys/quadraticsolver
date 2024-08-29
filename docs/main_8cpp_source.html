@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Quadratic solver: C:/Users/aleks/OneDrive/Документы/GitHub/quadraticsolver/source/main.cpp Source File</title>
+<title>Quadratic solver: source/main.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -83,7 +83,7 @@ $(function(){ initResizable(false); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_deea9ac2ebb701b26350058d0b80c84f.html">Документы</a></li><li class="navelem"><a class="el" href="dir_0dea5837734f1def49efb6e0f46ce015.html">GitHub</a></li><li class="navelem"><a class="el" href="dir_4465fc6efdd0a8a0788680a1052e0530.html">quadraticsolver</a></li><li class="navelem"><a class="el" href="dir_6205cce2b799ec3a0e4ec4c9505e717c.html">source</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html">source</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
@@ -91,24 +91,25 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">main.cpp</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="main_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="iosolver_8h.html">iosolver.h</a>&quot;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="foldopen" id="foldopen00004" data-start="{" data-end="}">
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">    4</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> * argv[])</div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>{</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>    <span class="keywordflow">if</span> (argc != 2) {</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>        <a class="code hl_function" href="iosolver_8h.html#a4b90163b9d4a69608dd2221e32341c4a">printBootError</a>();</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>        <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    }</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <a class="code hl_function" href="iosolver_8h.html#a0712227c86ad43ec488acd23536779da">pickMode</a>(argv[1]);</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>}</div>
+<a href="main_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;<a class="code" href="iosolver_8h.html">iosolver.h</a>&quot;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="foldopen" id="foldopen00003" data-start="{" data-end="}">
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno"><a class="line" href="main_8cpp.html#ac0f2228420376f4db7e1274f2b41667c">    3</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="main_8cpp.html#ac0f2228420376f4db7e1274f2b41667c">main</a>(<span class="keywordtype">int</span> argc, <span class="keyword">const</span> <span class="keywordtype">char</span> * argv[])</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span>{</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>    <span class="keywordflow">if</span> (argc != 2) {</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>        <a class="code hl_function" href="iosolver_8h.html#a4b90163b9d4a69608dd2221e32341c4a">printBootError</a>();</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>        <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    }</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <a class="code hl_function" href="iosolver_8h.html#a6bcfdabdd813caf990ed68e7966c7598">execMode</a>(argv[1]);</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>}</div>
 </div>
 <div class="ttc" id="aiosolver_8h_html"><div class="ttname"><a href="iosolver_8h.html">iosolver.h</a></div></div>
-<div class="ttc" id="aiosolver_8h_html_a0712227c86ad43ec488acd23536779da"><div class="ttname"><a href="iosolver_8h.html#a0712227c86ad43ec488acd23536779da">pickMode</a></div><div class="ttdeci">void pickMode(char *arg)</div><div class="ttdoc">Picks mode of work by argument of terminal.</div><div class="ttdef"><b>Definition</b> <a href="iosolver_8cpp_source.html#l00031">iosolver.cpp:31</a></div></div>
-<div class="ttc" id="aiosolver_8h_html_a4b90163b9d4a69608dd2221e32341c4a"><div class="ttname"><a href="iosolver_8h.html#a4b90163b9d4a69608dd2221e32341c4a">printBootError</a></div><div class="ttdeci">void printBootError()</div><div class="ttdoc">Prints error of boot if arguments is incorrect.</div><div class="ttdef"><b>Definition</b> <a href="iosolver_8cpp_source.html#l00276">iosolver.cpp:276</a></div></div>
-<div class="ttc" id="amain_8cpp_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdef"><b>Definition</b> <a href="#l00004">main.cpp:4</a></div></div>
+<div class="ttc" id="aiosolver_8h_html_a4b90163b9d4a69608dd2221e32341c4a"><div class="ttname"><a href="iosolver_8h.html#a4b90163b9d4a69608dd2221e32341c4a">printBootError</a></div><div class="ttdeci">void printBootError()</div><div class="ttdoc">Prints error of boot if arguments is incorrect.</div><div class="ttdef"><b>Definition</b> <a href="iosolver_8cpp_source.html#l00292">iosolver.cpp:292</a></div></div>
+<div class="ttc" id="aiosolver_8h_html_a6bcfdabdd813caf990ed68e7966c7598"><div class="ttname"><a href="iosolver_8h.html#a6bcfdabdd813caf990ed68e7966c7598">execMode</a></div><div class="ttdeci">void execMode(const char *arg)</div><div class="ttdoc">Picks mode of work by argument of terminal.</div><div class="ttdef"><b>Definition</b> <a href="iosolver_8cpp_source.html#l00032">iosolver.cpp:32</a></div></div>
+<div class="ttc" id="amain_8cpp_html_ac0f2228420376f4db7e1274f2b41667c"><div class="ttname"><a href="main_8cpp.html#ac0f2228420376f4db7e1274f2b41667c">main</a></div><div class="ttdeci">int main(int argc, const char *argv[])</div><div class="ttdef"><b>Definition</b> <a href="#l00003">main.cpp:3</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

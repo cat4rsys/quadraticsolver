@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['standart_0',['STANDART',['../iosolver_8h.html#aa3da7d3bbba5dcc5027e81d93c839afb',1,'iosolver.h']]]
+  ['red_0',['RED',['../utilities_8h.html#aafcd8bc26d31ab31e6e1c24bae5aba44',1,'utilities.h']]]
 ];

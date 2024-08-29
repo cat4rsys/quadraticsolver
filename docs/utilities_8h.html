@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Quadratic solver: C:/Users/aleks/OneDrive/Документы/GitHub/quadraticsolver/include/utilities.h File Reference</title>
+<title>Quadratic solver: include/utilities.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -83,7 +83,7 @@ $(function(){ initResizable(false); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_deea9ac2ebb701b26350058d0b80c84f.html">Документы</a></li><li class="navelem"><a class="el" href="dir_0dea5837734f1def49efb6e0f46ce015.html">GitHub</a></li><li class="navelem"><a class="el" href="dir_4465fc6efdd0a8a0788680a1052e0530.html">quadraticsolver</a></li><li class="navelem"><a class="el" href="dir_7588b6919a043a605a3f216634547eba.html">include</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
@@ -96,15 +96,15 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">utilities.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="iosolver_8h_source.html">iosolver.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;windows.h&gt;</code><br />
 </div>
 <p><a href="utilities_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:aab8af1cc3355a30e5ce7dec30350e70c" id="r_aab8af1cc3355a30e5ce7dec30350e70c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aab8af1cc3355a30e5ce7dec30350e70c">customAssert</a>(expression)</td></tr>
-<tr class="memdesc:aab8af1cc3355a30e5ce7dec30350e70c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assert, that doesn't stop program. Just gives warning about failed aseertion.  <br /></td></tr>
-<tr class="separator:aab8af1cc3355a30e5ce7dec30350e70c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9df8365ddb12e7cc771c7a76038a794f" id="r_a9df8365ddb12e7cc771c7a76038a794f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9df8365ddb12e7cc771c7a76038a794f">CUSTOM_ASSERT</a>(expression)</td></tr>
+<tr class="memdesc:a9df8365ddb12e7cc771c7a76038a794f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assert, that doesn't stop program. Just gives warning about failed aseertion.  <br /></td></tr>
+<tr class="separator:a9df8365ddb12e7cc771c7a76038a794f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -123,36 +123,49 @@ Functions</h2></td></tr>
 <tr class="memitem:aa6f8a3a13346e3a0204b493b8b762422" id="r_aa6f8a3a13346e3a0204b493b8b762422"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa6f8a3a13346e3a0204b493b8b762422">skipInput</a> (int symbol)</td></tr>
 <tr class="memdesc:aa6f8a3a13346e3a0204b493b8b762422"><td class="mdescLeft">&#160;</td><td class="mdescRight">Skips input if last entered symbol not "\n".  <br /></td></tr>
 <tr class="separator:aa6f8a3a13346e3a0204b493b8b762422"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8e67568c4b25b15175d4c3a6d6fce90" id="r_ab8e67568c4b25b15175d4c3a6d6fce90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab8e67568c4b25b15175d4c3a6d6fce90">setColor</a> (WORD color)</td></tr>
+<tr class="memdesc:ab8e67568c4b25b15175d4c3a6d6fce90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets color for output.  <br /></td></tr>
+<tr class="separator:ab8e67568c4b25b15175d4c3a6d6fce90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a3d8c24629d725b9ef8c238cf27c9b158" id="r_a3d8c24629d725b9ef8c238cf27c9b158"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3d8c24629d725b9ef8c238cf27c9b158">eps</a> = 1e-25</td></tr>
-<tr class="separator:a3d8c24629d725b9ef8c238cf27c9b158"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafcd8bc26d31ab31e6e1c24bae5aba44" id="r_aafcd8bc26d31ab31e6e1c24bae5aba44"><td class="memItemLeft" align="right" valign="top">const WORD&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aafcd8bc26d31ab31e6e1c24bae5aba44">RED</a> = 12</td></tr>
+<tr class="separator:aafcd8bc26d31ab31e6e1c24bae5aba44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22667cfbf6540c588e31c551b0ca1004" id="r_a22667cfbf6540c588e31c551b0ca1004"><td class="memItemLeft" align="right" valign="top">const WORD&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22667cfbf6540c588e31c551b0ca1004">CYAN</a> = 11</td></tr>
+<tr class="separator:a22667cfbf6540c588e31c551b0ca1004"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a293c50b6fc1e3e773f2f47d0ed9d5c2b" id="r_a293c50b6fc1e3e773f2f47d0ed9d5c2b"><td class="memItemLeft" align="right" valign="top">const WORD&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a293c50b6fc1e3e773f2f47d0ed9d5c2b">GREEN</a> = 10</td></tr>
+<tr class="separator:a293c50b6fc1e3e773f2f47d0ed9d5c2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad62f514d6f45bf1389c9da1d6ff769c1" id="r_ad62f514d6f45bf1389c9da1d6ff769c1"><td class="memItemLeft" align="right" valign="top">const WORD&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad62f514d6f45bf1389c9da1d6ff769c1">PURPLE</a> = 13</td></tr>
+<tr class="separator:ad62f514d6f45bf1389c9da1d6ff769c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac63fbc5e06f679962160a61ec8eb980d" id="r_ac63fbc5e06f679962160a61ec8eb980d"><td class="memItemLeft" align="right" valign="top">const WORD&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac63fbc5e06f679962160a61ec8eb980d">YELLOW</a> = 14</td></tr>
+<tr class="separator:ac63fbc5e06f679962160a61ec8eb980d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acca9029540d13d922581903ffe3cd67f" id="r_acca9029540d13d922581903ffe3cd67f"><td class="memItemLeft" align="right" valign="top">const WORD&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acca9029540d13d922581903ffe3cd67f">STANDART</a> = 15</td></tr>
+<tr class="separator:acca9029540d13d922581903ffe3cd67f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="aab8af1cc3355a30e5ce7dec30350e70c" name="aab8af1cc3355a30e5ce7dec30350e70c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab8af1cc3355a30e5ce7dec30350e70c">&#9670;&#160;</a></span>customAssert</h2>
+<a id="a9df8365ddb12e7cc771c7a76038a794f" name="a9df8365ddb12e7cc771c7a76038a794f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9df8365ddb12e7cc771c7a76038a794f">&#9670;&#160;</a></span>CUSTOM_ASSERT</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define customAssert</td>
+          <td class="memname">#define CUSTOM_ASSERT</td>
           <td>(</td>
           <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>expression</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    { \</div>
-<div class="line">    if( !expression ) { \</div>
-<div class="line">        setColor(<a class="code hl_variable" href="iosolver_8h.html#a1849725ee55eae115e3000bf552dee51">RED</a>); \</div>
+<b>Value:</b><div class="fragment"><div class="line">    {                                         \</div>
+<div class="line">    if( !(expression) ) {                                                   \</div>
+<div class="line">        setColor(<a class="code hl_variable" href="#aafcd8bc26d31ab31e6e1c24bae5aba44">RED</a>);                                                      \</div>
 <div class="line">        printf(<span class="stringliteral">&quot;Assertion failed: file %s, line %d\n&quot;</span>, __FILE__, __LINE__); \</div>
-<div class="line">        setColor(<a class="code hl_variable" href="iosolver_8h.html#aa3da7d3bbba5dcc5027e81d93c839afb">STANDART</a>); \</div>
-<div class="line">    } \</div>
+<div class="line">        setColor(<a class="code hl_variable" href="#acca9029540d13d922581903ffe3cd67f">STANDART</a>);                                                 \</div>
+<div class="line">    }                                                                       \</div>
 <div class="line">}</div>
-<div class="ttc" id="aiosolver_8h_html_a1849725ee55eae115e3000bf552dee51"><div class="ttname"><a href="iosolver_8h.html#a1849725ee55eae115e3000bf552dee51">RED</a></div><div class="ttdeci">const int RED</div><div class="ttdef"><b>Definition</b> <a href="iosolver_8h_source.html#l00012">iosolver.h:12</a></div></div>
-<div class="ttc" id="aiosolver_8h_html_aa3da7d3bbba5dcc5027e81d93c839afb"><div class="ttname"><a href="iosolver_8h.html#aa3da7d3bbba5dcc5027e81d93c839afb">STANDART</a></div><div class="ttdeci">const int STANDART</div><div class="ttdef"><b>Definition</b> <a href="iosolver_8h_source.html#l00017">iosolver.h:17</a></div></div>
+<div class="ttc" id="autilities_8h_html_aafcd8bc26d31ab31e6e1c24bae5aba44"><div class="ttname"><a href="#aafcd8bc26d31ab31e6e1c24bae5aba44">RED</a></div><div class="ttdeci">const WORD RED</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00008">utilities.h:8</a></div></div>
+<div class="ttc" id="autilities_8h_html_acca9029540d13d922581903ffe3cd67f"><div class="ttname"><a href="#acca9029540d13d922581903ffe3cd67f">STANDART</a></div><div class="ttdeci">const WORD STANDART</div><div class="ttdef"><b>Definition</b> <a href="utilities_8h_source.html#l00013">utilities.h:13</a></div></div>
 </div><!-- fragment -->
 <p>Assert, that doesn't stop program. Just gives warning about failed aseertion. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -162,7 +175,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="utilities_8h_source.html#l00023">23</a> of file <a class="el" href="utilities_8h_source.html">utilities.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utilities_8h_source.html#l00030">30</a> of file <a class="el" href="utilities_8h_source.html">utilities.h</a>.</p>
 
 </div>
 </div>
@@ -189,7 +202,7 @@ Variables</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="utilities_8h_source.html#l00011">11</a> of file <a class="el" href="utilities_8h_source.html">utilities.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utilities_8h_source.html#l00018">18</a> of file <a class="el" href="utilities_8h_source.html">utilities.h</a>.</p>
 
 </div>
 </div>
@@ -222,8 +235,36 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status of comparing of two doubles </dd></dl>
+<p>&lt; error of double</p>
 
-<p class="definition">Definition at line <a class="el" href="utilities_8cpp_source.html#l00028">28</a> of file <a class="el" href="utilities_8cpp_source.html">utilities.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utilities_8cpp_source.html#l00015">15</a> of file <a class="el" href="utilities_8cpp_source.html">utilities.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab8e67568c4b25b15175d4c3a6d6fce90" name="ab8e67568c4b25b15175d4c3a6d6fce90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8e67568c4b25b15175d4c3a6d6fce90">&#9670;&#160;</a></span>setColor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setColor </td>
+          <td>(</td>
+          <td class="paramtype">WORD</td>          <td class="paramname"><span class="paramname"><em>color</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets color for output. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">color</td><td>- number of color </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="utilities_8cpp_source.html#l00025">25</a> of file <a class="el" href="utilities_8cpp_source.html">utilities.cpp</a>.</p>
 
 </div>
 </div>
@@ -255,20 +296,105 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="a3d8c24629d725b9ef8c238cf27c9b158" name="a3d8c24629d725b9ef8c238cf27c9b158"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d8c24629d725b9ef8c238cf27c9b158">&#9670;&#160;</a></span>eps</h2>
+<a id="a22667cfbf6540c588e31c551b0ca1004" name="a22667cfbf6540c588e31c551b0ca1004"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22667cfbf6540c588e31c551b0ca1004">&#9670;&#160;</a></span>CYAN</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const double eps = 1e-25</td>
+          <td class="memname">const WORD CYAN = 11</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>error of double </p>
+<p>Cyan text color </p>
 
-<p class="definition">Definition at line <a class="el" href="utilities_8h_source.html#l00006">6</a> of file <a class="el" href="utilities_8h_source.html">utilities.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utilities_8h_source.html#l00009">9</a> of file <a class="el" href="utilities_8h_source.html">utilities.h</a>.</p>
+
+</div>
+</div>
+<a id="a293c50b6fc1e3e773f2f47d0ed9d5c2b" name="a293c50b6fc1e3e773f2f47d0ed9d5c2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a293c50b6fc1e3e773f2f47d0ed9d5c2b">&#9670;&#160;</a></span>GREEN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const WORD GREEN = 10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Green text color </p>
+
+<p class="definition">Definition at line <a class="el" href="utilities_8h_source.html#l00010">10</a> of file <a class="el" href="utilities_8h_source.html">utilities.h</a>.</p>
+
+</div>
+</div>
+<a id="ad62f514d6f45bf1389c9da1d6ff769c1" name="ad62f514d6f45bf1389c9da1d6ff769c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad62f514d6f45bf1389c9da1d6ff769c1">&#9670;&#160;</a></span>PURPLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const WORD PURPLE = 13</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Purple text color </p>
+
+<p class="definition">Definition at line <a class="el" href="utilities_8h_source.html#l00011">11</a> of file <a class="el" href="utilities_8h_source.html">utilities.h</a>.</p>
+
+</div>
+</div>
+<a id="aafcd8bc26d31ab31e6e1c24bae5aba44" name="aafcd8bc26d31ab31e6e1c24bae5aba44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aafcd8bc26d31ab31e6e1c24bae5aba44">&#9670;&#160;</a></span>RED</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const WORD RED = 12</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Red text color </p>
+
+<p class="definition">Definition at line <a class="el" href="utilities_8h_source.html#l00008">8</a> of file <a class="el" href="utilities_8h_source.html">utilities.h</a>.</p>
+
+</div>
+</div>
+<a id="acca9029540d13d922581903ffe3cd67f" name="acca9029540d13d922581903ffe3cd67f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acca9029540d13d922581903ffe3cd67f">&#9670;&#160;</a></span>STANDART</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const WORD STANDART = 15</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Standart text color </p>
+
+<p class="definition">Definition at line <a class="el" href="utilities_8h_source.html#l00013">13</a> of file <a class="el" href="utilities_8h_source.html">utilities.h</a>.</p>
+
+</div>
+</div>
+<a id="ac63fbc5e06f679962160a61ec8eb980d" name="ac63fbc5e06f679962160a61ec8eb980d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac63fbc5e06f679962160a61ec8eb980d">&#9670;&#160;</a></span>YELLOW</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const WORD YELLOW = 14</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Yellow text color </p>
+
+<p class="definition">Definition at line <a class="el" href="utilities_8h_source.html#l00012">12</a> of file <a class="el" href="utilities_8h_source.html">utilities.h</a>.</p>
 
 </div>
 </div>

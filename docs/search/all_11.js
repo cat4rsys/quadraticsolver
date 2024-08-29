@@ -11,7 +11,7 @@ var searchData=
   ['readnum_8',['readNum',['../read_8h.html#a4191093bf5b01bb5b7c460d12873692a',1,'readNum(int *symbol, int *prevSymbol, double *num):&#160;read.cpp'],['../read_8cpp.html#a4191093bf5b01bb5b7c460d12873692a',1,'readNum(int *symbol, int *prevSymbol, double *num):&#160;read.cpp']]],
   ['readsign_9',['readSign',['../read_8h.html#a1cf093275a7a85223e3b1759d1082a35',1,'readSign(int symbol, PartsOfEquation part):&#160;read.cpp'],['../read_8cpp.html#a1cf093275a7a85223e3b1759d1082a35',1,'readSign(int symbol, PartsOfEquation part):&#160;read.cpp']]],
   ['readvar_10',['readVar',['../read_8h.html#a281a0837d343021d52e75565326593a5',1,'readVar(int ifMult, int *power, int ifNum, double *num):&#160;read.cpp'],['../read_8cpp.html#a281a0837d343021d52e75565326593a5',1,'readVar(int ifMult, int *power, int ifNum, double *num):&#160;read.cpp']]],
-  ['red_11',['RED',['../iosolver_8h.html#a1849725ee55eae115e3000bf552dee51',1,'iosolver.h']]],
+  ['red_11',['RED',['../utilities_8h.html#aafcd8bc26d31ab31e6e1c24bae5aba44',1,'utilities.h']]],
   ['resultoftest_12',['ResultOfTest',['../testsys_8h.html#afa47578d6ad04c2196a7641cbc9cc2ae',1,'testsys.h']]],
   ['return_5fin_5fmain_5fmenu_13',['RETURN_IN_MAIN_MENU',['../iosolver_8h.html#a6c667392f490438e0edce2d0f86ad601aebe6283a779dfa997dca158d68fdf3e7',1,'iosolver.h']]],
   ['right_5fpart_14',['RIGHT_PART',['../iosolver_8h.html#aa94736c4daf0bbfd80879b1bd9ce4e00a43b64f0d814498563fce8359bbac719c',1,'iosolver.h']]],
